@@ -16,9 +16,9 @@ export default function () {
         // console.log('closeSideBar')
         // store.dispatch('app/closeSideBar', { withoutAnimation: true })
         /*此处只做根据window尺寸关闭sideBar功能*/
-        store.commit('app/M_sidebar_opened', false)
+        // store.commit('app/M_sidebar_opened', false)
       } else {
-        store.commit('app/M_sidebar_opened', true)
+        // store.commit('app/M_sidebar_opened', true)
       }
     }
   }
@@ -28,11 +28,11 @@ export default function () {
   onMounted(() => {
     const isMobile = $_isMobile()
     if (isMobile) {
-      store.commit('app/M_sidebar_opened', false)
+      // store.commit('app/M_sidebar_opened', false)
       // store.dispatch('app/toggleDevice', 'mobile')
       // store.dispatch('app/closeSideBar', { withoutAnimation: true })
     } else {
-      store.commit('app/M_sidebar_opened', true)
+      // store.commit('app/M_sidebar_opened', true)
     }
   })
   onBeforeUnmount(() => {

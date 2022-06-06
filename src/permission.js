@@ -38,14 +38,14 @@ router.beforeEach(async (to, from, next) => {
             accessRoutes = asyncRoutes
           }
           // setting constRouters and accessRoutes to vuex , in order to sideBar for using
-          store.commit('permission/M_routes', accessRoutes)
+          // store.commit('permission/M_routes', accessRoutes)
           // dynamically add accessible routes
           //router4 addRoutes destroyed
           accessRoutes.forEach((route) => {
             router.addRoute(route)
           })
           //already get userInfo
-          store.commit('permission/M_isGetUserInfo', true)
+          // store.commit('permission/M_isGetUserInfo', true)
           // hack method to ensure that addRoutes is complete
           // set the replace: true, so the navigation will not leave a history record
           next({ ...to, replace: true })
