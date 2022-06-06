@@ -1,5 +1,9 @@
 <template>
-  <div :class="classObj" class="layout-wrapper"></div>
+  <div :class="classObj" class="layout-wrapper">
+    <div class="main-container">
+      <AppMain />
+    </div>
+  </div>
 </template>
 <!--原理vue2.0-->
 <script>
@@ -12,6 +16,7 @@ export default {
 <script setup>
 //import ResizeHook to  listen  page size that  open or close
 import ResizeHook from './hook/useResizeHandler'
+import { AppMain } from './components'
 
 ResizeHook()
 </script>

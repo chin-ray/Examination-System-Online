@@ -1,9 +1,5 @@
-<template>
-  <Editor />
-</template>
+<template>首页</template>
 
-<script setup>
-import Editor from './Editor'
-</script>
+<script setup></script>
 
 <style scoped lang="scss"></style>
