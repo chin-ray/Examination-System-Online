@@ -1,40 +1,16 @@
 <template>
   <div class="dashboard-editor-container">
-    <div class="clearfix">
-      <pan-thumb :image="avatar" style="float: left">
-        <span v-for="item in roles" :key="item" class="pan-info-roles">{{ getI18nName('roles', item) }}</span>
-      </pan-thumb>
-      <div class="info-container">
-        <span class="display_name">{{ name }}</span>
-      </div>
-    </div>
     <img :src="emptyGif" class="emptyGif" />
   </div>
 </template>
 
 <script setup>
-import PanThumb from '@/views/dashboard/PanThumb'
-import { toRefs, reactive, computed } from 'vue'
-import { useStore } from 'vuex'
-
-//i18
-import useI18n from '@/hooks/useI18n'
-const { getI18nName } = useI18n()
+import { toRefs, reactive } from 'vue'
 
 const state = reactive({
   emptyGif: 'https://wpimg.wallstcn.com/0e03b7da-db9e-4819-ba10-9016ddfdaed3'
 })
 
-const store = useStore()
-const name = computed(() => {
-  return store.state.user.username
-})
-const avatar = computed(() => {
-  return store.state.user.avatar
-})
-const roles = computed(() => {
-  return store.state.user.roles
-})
 let { emptyGif } = toRefs(state)
 </script>
 

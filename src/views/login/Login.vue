@@ -107,7 +107,7 @@
         <el-link :icon="ArrowLeftBold" :underline="false" class="tip-register" @click="toChange">返回登录</el-link>
       </div>
       <el-button :loading="loading" type="primary" class="login-btn" size="medium" @click.prevent="handleRegister">
-        {{ getI18nName('login', 'register') }}
+        登录
       </el-button>
     </el-form>
   </div>
@@ -121,17 +121,11 @@ export default {
 </script>
 
 <script setup>
-import { Promotion, ArrowLeftBold } from '@element-plus/icons-vue'
 import { reactive, getCurrentInstance, watch, ref } from 'vue'
 import settings from '@/settings'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessageBox } from 'element-plus'
 import { addUserReq } from '@/api/user'
-
-//i18
-import useI18n from '@/hooks/useI18n'
-const { getI18nName } = useI18n()
 
 let { proxy } = getCurrentInstance()
 //form
@@ -174,7 +168,6 @@ const toChange = () => {
  * */
 let loading = ref(false)
 let tipMessage = ref('')
-const store = useStore()
 let handleLogin = () => {
   proxy.$refs['refLoginForm'].validate((valid) => {
     if (valid) {
@@ -186,27 +179,6 @@ let handleLogin = () => {
 }
 let fatLoginReq = () => {
   loading.value = true
-  store
-    .dispatch('user/login', formInline)
-    .then(() => {
-      proxy.$router.push({ path: state.redirect || '/dashboard', query: state.otherQuery })
-      ElMessage({ message: '登录成功', type: 'success' })
-    })
-    .catch((error) => {
-      if (typeof error != 'object') {
-        error = JSON.parse(error)
-      }
-      if (error.code) {
-        if (error.code === 403) {
-          tipMessage.value = error.msg
-        } else {
-          ElMessage({ message: error.msg, type: 'error' })
-        }
-      }
-      proxy.sleepMixin(30).then(() => {
-        loading.value = false
-      })
-    })
 }
 
 /*

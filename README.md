@@ -25,3 +25,7 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 - ci 持续集成
 - types 类型定义文件更改
 - wip 开发中
+
+# 格式化所有文件（. 表示所有文件）
+
+npx prettier --write .

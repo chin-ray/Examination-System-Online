@@ -5,28 +5,25 @@
 <script>
 /*可以设置默认的名字*/
 export default {
-  name: "Layout",
-};
+  name: 'Layout'
+}
 </script>
 
 <script setup>
 //import ResizeHook to  listen  page size that  open or close
-import ResizeHook from "./hook/useResizeHandler";
+import ResizeHook from './hook/useResizeHandler'
 
-ResizeHook();
+ResizeHook()
 </script>
 
 <style lang="scss" scoped>
 .main-container {
   min-height: 100%;
   transition: margin-left 0.28s;
-  margin-left: $sideBarWidth;
   position: relative;
 }
 .sidebar-container {
   transition: width 0.28s;
-  width: $sideBarWidth !important;
-  background-color: $menuBg;
   height: 100%;
   position: fixed;
   font-size: 0;
