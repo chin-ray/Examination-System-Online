@@ -1,44 +1,19 @@
 <template>
-  <div :class="classObj" class="layout-wrapper">
-    <!--left side-->
-    <Sidebar v-if="settings.showLeftMenu" class="sidebar-container" />
-    <!--right container-->
-    <div class="main-container">
-      <Navbar v-if="settings.showTopNavbar" />
-      <TagsView v-if="settings.showTagsView" />
-      <AppMain />
-    </div>
-  </div>
+  <div :class="classObj" class="layout-wrapper"></div>
 </template>
 <!--原理vue2.0-->
 <script>
 /*可以设置默认的名字*/
 export default {
-  name: 'Layout'
-}
+  name: "Layout",
+};
 </script>
 
 <script setup>
-import { Sidebar, Navbar, AppMain, TagsView } from './components'
-import { computed } from 'vue'
-import { useStore } from 'vuex'
-const store = useStore()
-
-let opened = computed(() => {
-  return store.state.app.sidebar.opened
-})
-let settings = computed(() => {
-  return store.state.app.settings
-})
-let classObj = computed(() => {
-  return {
-    closeSidebar: !opened.value,
-    hideSidebar: !settings.value.showLeftMenu
-  }
-})
 //import ResizeHook to  listen  page size that  open or close
-import ResizeHook from './hook/useResizeHandler'
-ResizeHook()
+import ResizeHook from "./hook/useResizeHandler";
+
+ResizeHook();
 </script>
 
 <style lang="scss" scoped>
