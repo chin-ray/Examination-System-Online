@@ -1,22 +1,16 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
-import Layout from '@/layout'
 
 export const constantRoutes = [
   {
     path: '/redirect',
     hidden: true,
-    component: Layout,
+    // component: Layout,
     children: [
       {
         path: '/redirect/:path(.*)',
         component: () => import('@/views/redirect')
       }
     ]
-  },
-  {
-    path: '/login',
-    hidden: true,
-    component: () => import('@/views/login/Login.vue')
   },
   {
     path: '/404',
@@ -30,17 +24,9 @@ export const constantRoutes = [
   },
   {
     path: '/',
-    component: Layout,
-    redirect: '/dashboard',
-    hidden: true,
-    children: [
-      {
-        name: 'Dashboard',
-        path: 'dashboard',
-        meta: { title: 'Dashboard', elSvgIcon: 'Fold', affix: true },
-        component: () => import('@/views/dashboard/index.vue')
-      }
-    ]
+    name: 'Home',
+    meta: { title: 'Home' },
+    component: () => import('@/views/home/index.vue'),
   },
 ]
 
