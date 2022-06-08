@@ -15,7 +15,6 @@
         v-if="item.component != 'v-text'"
         :id="'component' + item.id"
         class="component"
-        :style="getComponentStyle(item.style)"
         :prop-value="item.propValue"
         :element="item"
       />

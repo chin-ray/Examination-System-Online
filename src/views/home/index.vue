@@ -15,7 +15,7 @@
           @drop="handleDrop"
           @dragover="handleDragOver"
           @mousedown="handleMouseDown"
-          @mouseup="deselectCurComponent"
+          @mouseup="handleMouseUp"
         >
           <Editor />
         </div>
@@ -27,46 +27,42 @@
 </template>
 
 <script setup>
+import { onBeforeMount } from 'vue'
+import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import ComponentList from './modules/ComponentList' // 左侧组件列表
 import componentListData from './modules/component-list' // 左侧组件列表数据
 import Editor from './modules/Editor/index' // 中间画布
 import { mainStore } from '@/store'
 const store = mainStore()
 
+// 拖拽结束
 const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
+  console.log('handleDrop')
   const index = e.dataTransfer.getData('index')
-  const rectInfo = store.editor.getBoundingClientRect()
-  if (index) {
-    const component = deepCopy(componentListData[index])
-    component.style.top = e.clientY - rectInfo.y
-    component.style.left = e.clientX - rectInfo.x
-    component.id = generateID()
-    store.addComponent(component)
-    // this.$store.commit('recordSnapshot')
-  }
+  console.log(index)
 }
+// 拖拽过程
 const handleDragOver = (e) => {
-  e.preventDefault()
-  e.dataTransfer.dropEffect = 'copy'
+  console.log('handleDragOver')
 }
-
+// 鼠标单击按下
 const handleMouseDown = (e) => {
-  e.stopPropagation()
-  // this.$store.commit('setClickComponentStatus', false)
-  // this.$store.commit('setInEditorStatus', true)
+  console.log('handleMouseDown')
+}
+// 鼠标单击抬起
+const handleMouseUp = (e) => {
+  console.log('handleMouseDown')
+  deselectCurComponent()
+}
+const deselectCurComponent = (e) => {
+  console.log('deselectCurComponent')
 }
 
-const deselectCurComponent = (e) => {
-  // if (!this.isClickComponent) {
-  //   // this.$store.commit('setCurComponent', { component: null, index: null })
-  // }
-  // 0 左击 1 滚轮 2 右击
-  // if (e.button != 2) {
-  //   // this.$store.commit('hideContextMenu')
-  // }
-}
+onBeforeMount(() => {
+  listenGlobalKeyDown() // 全局监听按键事件
+})
 </script>
 
 <style lang="scss">

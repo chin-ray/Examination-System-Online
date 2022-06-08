@@ -43,25 +43,25 @@ export const mainStore = defineStore("main", {
     ...animation.actions,
     ...compose.actions,
 
-    setClickComponentStatus(state, status) {
-      state.isClickComponent = status
+    setClickComponentStatus(status) {
+      this.isClickComponent = status
     },
 
-    setEditMode(state, mode) {
-      state.editMode = mode
+    setEditMode(mode) {
+      this.editMode = mode
     },
 
-    setInEditorStatus(state, status) {
-      state.isInEdiotr = status
+    setInEditorStatus(status) {
+      this.isInEdiotr = status
     },
 
-    setCanvasStyle(state, style) {
-      state.canvasStyleData = style
+    setCanvasStyle(style) {
+      this.canvasStyleData = style
     },
 
-    setCurComponent(state, { component, index }) {
-      state.curComponent = component
-      state.curComponentIndex = index
+    setCurComponent({ component, index }) {
+      this.curComponent = component
+      this.curComponentIndex = index
     },
 
     setShapeStyle({ curComponent }, { top, left, width, height, rotate }) {
@@ -76,30 +76,30 @@ export const mainStore = defineStore("main", {
       curComponent.style[key] = value
     },
 
-    setComponentData(state, componentData = []) {
-      Vue.set(state, 'componentData', componentData)
+    setComponentData(componentData = []) {
+      // Vue.set( 'componentData', componentData)
     },
 
-    addComponent(state, { component, index }) {
+    addComponent({ component, index }) {
       if (index !== undefined) {
-        state.componentData.splice(index, 0, component)
+        this.componentData.splice(index, 0, component)
       } else {
-        state.componentData.push(component)
+        this.componentData.push(component)
       }
     },
 
-    deleteComponent(state, index) {
+    deleteComponent(index) {
       if (index === undefined) {
-        index = state.curComponentIndex
+        index = this.curComponentIndex
       }
 
-      if (index == state.curComponentIndex) {
-        state.curComponentIndex = null
-        state.curComponent = null
+      if (index == this.curComponentIndex) {
+        this.curComponentIndex = null
+        this.curComponent = null
       }
 
       if (/\d/.test(index)) {
-        state.componentData.splice(index, 1)
+        this.componentData.splice(index, 1)
       }
     },
   },

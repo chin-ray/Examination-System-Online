@@ -20,9 +20,7 @@ const state = reactive({
   componentList: componentList
 })
 const handleDragStart = (e) => {
-  console.log(e)
-  console.log(e.target.dataset.index)
-  // e.dataTransfer.setData('index', e.target.dataset.index)
+  e.dataTransfer.setData('index', e.target.dataset.index)
 }
 </script>
 

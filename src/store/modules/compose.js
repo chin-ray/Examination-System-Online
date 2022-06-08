@@ -14,12 +14,12 @@ export default {
         editor: null,
     },
     actions: {
-        getEditor(state) {
-            state.editor = $('#editor')
+        getEditor() {
+            this.editor = $('#editor')
         },
 
-        setAreaData(state, data) {
-            state.areaData = data
+        setAreaData(data) {
+            this.areaData = data
         },
 
         compose({ componentData, areaData, editor }) {
