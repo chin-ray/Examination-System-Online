@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <header>
+      <div>6312</div>
+    </header>
     <main>
       <!-- 左侧组件列表 -->
       <section class="left">
@@ -23,6 +26,7 @@
 
 <script setup>
 import ComponentList from './modules/ComponentList' // 左侧列表数据
+import Editor from './modules/Editor/index' // 中间画布
 
 const handleDrop = (e) => {
   e.preventDefault()
@@ -62,12 +66,20 @@ const deselectCurComponent = (e) => {
 </script>
 
 <style lang="scss">
+$headerHeight: 50px;
+$padding: 10px;
+
 .home {
   height: 100vh;
-  background: #fff;
+  background: #f1f2f6;
+
+  header {
+    height: $headerHeight;
+    padding: $padding;
+  }
 
   main {
-    height: calc(100% - 64px);
+    height: calc(100% - #{$headerHeight});
     position: relative;
 
     .left {
@@ -77,6 +89,7 @@ const deselectCurComponent = (e) => {
       left: 0;
       top: 0;
       padding-top: 10px;
+      background-color: #eff2f7;
     }
 
     .right {
@@ -90,7 +103,6 @@ const deselectCurComponent = (e) => {
     .center {
       margin-left: 200px;
       margin-right: 262px;
-      background: #f5f5f5;
       height: 100%;
       overflow: auto;
       padding: 20px;
