@@ -7,7 +7,7 @@
     <main>
       <!-- 左侧组件列表 -->
       <section class="item left">
-        <component-list />
+        <ComponentList />
       </section>
       <!-- 中间画布 -->
       <section class="center">
@@ -28,24 +28,34 @@
 </template>
 
 <script setup>
-import { onBeforeMount } from 'vue'
+import { onBeforeMount, onMounted } from 'vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import ComponentList from './modules/ComponentList' // 左侧组件列表
+import componentList from '@/components/draggable/component-list' // 左侧列表数据
 import Editor from './modules/Editor/index' // 中间画布
 import { mainStore } from '@/store'
+import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
 
 // 拖拽结束
 const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
-  console.log('handleDrop')
   const index = e.dataTransfer.getData('index')
-  console.log(index)
+  const rectInfo = store.editor.getBoundingClientRect()
+  if (index) {
+    const component = deepCopy(componentList[index])
+    component.style.top = e.clientY - rectInfo.y
+    component.style.left = e.clientX - rectInfo.x
+    component.id = generateID()
+    store.addComponent({ component })
+    // store.recordSnapshot()
+  }
 }
 // 拖拽过程
 const handleDragOver = (e) => {
-  // console.log('handleDragOver')
+  e.preventDefault()
+  e.dataTransfer.dropEffect = 'copy'
 }
 // 鼠标单击按下
 const handleMouseDown = (e) => {
@@ -62,6 +72,9 @@ const deselectCurComponent = (e) => {
 
 onBeforeMount(() => {
   listenGlobalKeyDown() // 全局监听按键事件
+})
+onMounted(() => {
+  store.getEditor() // 获取编辑器元素
 })
 </script>
 
