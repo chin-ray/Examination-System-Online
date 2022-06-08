@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 
-import { VButton } from '@/components/custom-component' // 注册自定义组件
+import { VButton } from '@/components/draggable' // 注册自定义组件
 
 import router from "./router";
 import { createPinia } from "pinia";
