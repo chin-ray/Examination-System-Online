@@ -3,6 +3,7 @@
     <header>
       <section class="header rowCC">工具栏</section>
     </header>
+
     <main>
       <!-- 左侧组件列表 -->
       <section class="item left">
@@ -44,19 +45,19 @@ const handleDrop = (e) => {
 }
 // 拖拽过程
 const handleDragOver = (e) => {
-  console.log('handleDragOver')
+  // console.log('handleDragOver')
 }
 // 鼠标单击按下
 const handleMouseDown = (e) => {
-  console.log('handleMouseDown')
+  // console.log('handleMouseDown')
 }
 // 鼠标单击抬起
 const handleMouseUp = (e) => {
-  console.log('handleMouseDown')
+  // console.log('handleMouseUp')
   deselectCurComponent()
 }
 const deselectCurComponent = (e) => {
-  console.log('deselectCurComponent')
+  // console.log('deselectCurComponent')
 }
 
 onBeforeMount(() => {

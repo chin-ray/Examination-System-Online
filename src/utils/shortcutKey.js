@@ -1,5 +1,5 @@
 import { mainStore } from '@/store'
-const store = mainStore
+const store = mainStore()
 
 const ctrlKey = 17,
     commandKey = 91, // mac command
@@ -53,6 +53,7 @@ const unlockMap = {
 }
 
 let isCtrlOrCommandDown = false
+
 // 全局监听按键操作并执行相应命令
 export function listenGlobalKeyDown() {
     window.onkeydown = (e) => {
