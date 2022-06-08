@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <header>
-      <section class="header">工具</section>
+      <section class="header rowCC">工具栏</section>
     </header>
     <main>
       <!-- 左侧组件列表 -->
@@ -21,13 +21,14 @@
         </div>
       </section>
       <!-- 右侧组件列表 -->
-      <section class="item right">配置区</section>
+      <section class="item right rowCC">配置区</section>
     </main>
   </div>
 </template>
 
 <script setup>
-import ComponentList from './modules/ComponentList' // 左侧列表数据
+import ComponentList from './modules/ComponentList' // 左侧组件列表
+import componentListData from './modules/component-list' // 左侧组件列表数据
 import Editor from './modules/Editor/index' // 中间画布
 import { mainStore } from '@/store'
 const store = mainStore()
@@ -36,13 +37,13 @@ const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
   const index = e.dataTransfer.getData('index')
-  const rectInfo = this.editor.getBoundingClientRect()
+  const rectInfo = store.editor.getBoundingClientRect()
   if (index) {
-    const component = deepCopy(componentList[index])
+    const component = deepCopy(componentListData[index])
     component.style.top = e.clientY - rectInfo.y
     component.style.left = e.clientX - rectInfo.x
     component.id = generateID()
-    // this.$store.commit('addComponent', { component })
+    store.addComponent(component)
     // this.$store.commit('recordSnapshot')
   }
 }
@@ -58,14 +59,13 @@ const handleMouseDown = (e) => {
 }
 
 const deselectCurComponent = (e) => {
-  if (!this.isClickComponent) {
-    // this.$store.commit('setCurComponent', { component: null, index: null })
-  }
-
+  // if (!this.isClickComponent) {
+  //   // this.$store.commit('setCurComponent', { component: null, index: null })
+  // }
   // 0 左击 1 滚轮 2 右击
-  if (e.button != 2) {
-    // this.$store.commit('hideContextMenu')
-  }
+  // if (e.button != 2) {
+  //   // this.$store.commit('hideContextMenu')
+  // }
 }
 </script>
 
@@ -113,20 +113,15 @@ $rightWidth: 250px;
 
     .center {
       height: 100%;
-      margin-left: $leftWidth;
-      margin-right: $rightWidth;
-      padding: $padding;
+      margin-left: calc(#{$leftWidth} + 40px);
+      margin-right: calc(#{$rightWidth} + 40px);
+      padding-bottom: $padding;
 
       .content {
         width: 100%;
         height: 100%;
       }
     }
-  }
-
-  .placeholder {
-    text-align: center;
-    color: #333;
   }
 }
 </style>

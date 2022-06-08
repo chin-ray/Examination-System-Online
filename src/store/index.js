@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import getters from './getters'
 import animation from './modules/animation'
+import compose from './modules/compose'
 
 // 1.定义容器
 // 参数1： 容器的ID，必须唯一，将来pinia会把所有容器挂载到根容器
@@ -14,6 +15,8 @@ export const mainStore = defineStore("main", {
    */
   state: () => {
     return {
+      ...compose.state,
+
       editMode: 'edit', // 编辑器模式 edit preview
       canvasStyleData: { // 页面全局数据
         width: 700,
@@ -37,6 +40,67 @@ export const mainStore = defineStore("main", {
    * 类似于组件的methods，封装业务逻辑（同步，异步都可以），修改state
    */
   actions: {
-    ...animation.actions
+    ...animation.actions,
+    ...compose.actions,
+
+    setClickComponentStatus(state, status) {
+      state.isClickComponent = status
+    },
+
+    setEditMode(state, mode) {
+      state.editMode = mode
+    },
+
+    setInEditorStatus(state, status) {
+      state.isInEdiotr = status
+    },
+
+    setCanvasStyle(state, style) {
+      state.canvasStyleData = style
+    },
+
+    setCurComponent(state, { component, index }) {
+      state.curComponent = component
+      state.curComponentIndex = index
+    },
+
+    setShapeStyle({ curComponent }, { top, left, width, height, rotate }) {
+      if (top) curComponent.style.top = top
+      if (left) curComponent.style.left = left
+      if (width) curComponent.style.width = width
+      if (height) curComponent.style.height = height
+      if (rotate) curComponent.style.rotate = rotate
+    },
+
+    setShapeSingleStyle({ curComponent }, { key, value }) {
+      curComponent.style[key] = value
+    },
+
+    setComponentData(state, componentData = []) {
+      Vue.set(state, 'componentData', componentData)
+    },
+
+    addComponent(state, { component, index }) {
+      if (index !== undefined) {
+        state.componentData.splice(index, 0, component)
+      } else {
+        state.componentData.push(component)
+      }
+    },
+
+    deleteComponent(state, index) {
+      if (index === undefined) {
+        index = state.curComponentIndex
+      }
+
+      if (index == state.curComponentIndex) {
+        state.curComponentIndex = null
+        state.curComponent = null
+      }
+
+      if (/\d/.test(index)) {
+        state.componentData.splice(index, 1)
+      }
+    },
   },
 });

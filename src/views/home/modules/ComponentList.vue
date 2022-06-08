@@ -28,7 +28,7 @@ const handleDragStart = (e) => {
 
 <style lang="scss" scoped>
 .component-list {
-  padding: 10px;
+  padding: 0 10px;
   :deep(.el-col) {
     margin-top: 10px;
   }

@@ -1,10 +1,31 @@
 <template>
-  <div id="editor" class="editor" :class="{ edit: props.isEdit }"></div>
+  <div id="editor" class="editor" :class="{ edit: props.isEdit }">
+    <!-- 网格线 -->
+    <Grid />
+    <div
+      v-for="(item, index) in state.componentData"
+      :key="item.id"
+      :default-style="item.style"
+      :element="item"
+      :index="index"
+      :class="{ lock: item.isLock }"
+    >
+      <component
+        :is="item.component"
+        v-if="item.component != 'v-text'"
+        :id="'component' + item.id"
+        class="component"
+        :style="getComponentStyle(item.style)"
+        :prop-value="item.propValue"
+        :element="item"
+      />
+    </div>
+  </div>
 </template>
 
 <script setup>
 import { defineProps, reactive, computed } from 'vue'
-import { changeStyleWithScale } from '@/utils/translate'
+import Grid from './Grid'
 import { mainStore } from '@/store'
 const store = mainStore()
 
@@ -16,6 +37,7 @@ const props = defineProps({
 })
 
 const state = reactive({
+  componentData: store.componentData,
   editorX: 0,
   editorY: 0,
   start: {
@@ -27,9 +49,6 @@ const state = reactive({
   height: 0,
   isShowArea: false
 })
-
-console.log(store)
-const canvasStyleData = computed(() => store.canvasStyleData)
 </script>
 
 <style lang="scss" scoped>
