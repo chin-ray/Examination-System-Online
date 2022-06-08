@@ -14,7 +14,7 @@
 <script setup>
 import { reactive } from 'vue'
 import { Box } from '@element-plus/icons-vue'
-import componentList from './component-list'
+import componentList from '@/components/custom-component/component-list'
 
 const state = reactive({
   componentList: componentList

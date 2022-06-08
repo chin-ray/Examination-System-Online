@@ -14,22 +14,6 @@ export const commonAttr = {
 // 编辑器左侧组件列表
 const list = [
     {
-        component: 'v-text',
-        label: '文字',
-        propValue: '双击编辑文字',
-        icon: 'wenben',
-        style: {
-            width: 200,
-            height: 22,
-            fontSize: 14,
-            fontWeight: 500,
-            lineHeight: '',
-            letterSpacing: 0,
-            textAlign: '',
-            color: '',
-        },
-    },
-    {
         component: 'v-button',
         label: '按钮',
         propValue: '按钮',
@@ -47,28 +31,6 @@ const list = [
             textAlign: '',
             color: '',
             backgroundColor: '',
-        },
-    },
-    {
-        component: 'rect-shape',
-        label: '矩形',
-        propValue: '&nbsp;',
-        icon: 'juxing',
-        style: {
-            width: 200,
-            height: 200,
-            fontSize: 14,
-            fontWeight: 500,
-            lineHeight: '',
-            letterSpacing: 0,
-            textAlign: 'center',
-            color: '',
-            borderColor: '#000',
-            borderWidth: 1,
-            backgroundColor: '',
-            borderStyle: 'solid',
-            borderRadius: '',
-            verticalAlign: 'middle',
         },
     },
 ]

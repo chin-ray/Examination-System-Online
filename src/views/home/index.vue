@@ -30,7 +30,6 @@
 import { onBeforeMount } from 'vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import ComponentList from './modules/ComponentList' // 左侧组件列表
-import componentListData from './modules/component-list' // 左侧组件列表数据
 import Editor from './modules/Editor/index' // 中间画布
 import { mainStore } from '@/store'
 const store = mainStore()
