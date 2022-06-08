@@ -72,12 +72,13 @@ const deselectCurComponent = (e) => {
 <style lang="scss">
 $headerHeight: 50px;
 $padding: 8px;
-$leftWidth: 250px;
+$leftWidth: 220px;
 $rightWidth: 250px;
 
 .home {
   height: 100vh;
   background-color: #f1f2f6;
+  user-select: none;
 
   header {
     height: $headerHeight;
@@ -86,6 +87,7 @@ $rightWidth: 250px;
     .header {
       height: 100%;
       background-color: #fff;
+      border-radius: 3px;
     }
   }
 
@@ -96,16 +98,16 @@ $rightWidth: 250px;
     .item {
       position: absolute;
       height: 100%;
-      width: $leftWidth;
       top: 0;
       padding-top: $padding;
       background-color: #fff;
     }
     .left {
+      width: $leftWidth;
       left: 0;
     }
-
     .right {
+      width: $rightWidth;
       right: 0;
     }
 
@@ -114,7 +116,6 @@ $rightWidth: 250px;
       margin-left: $leftWidth;
       margin-right: $rightWidth;
       padding: $padding;
-      overflow: auto;
 
       .content {
         width: 100%;

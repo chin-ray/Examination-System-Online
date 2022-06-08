@@ -1,55 +1,47 @@
 <template>
-  <div class="component-list" @dragstart="handleDragStart">
-    <div v-for="(item, index) in state.componentList" :key="index" class="list" draggable :data-index="index">
-      <span class="iconfont" :class="'icon-' + item.icon"></span>
-      <span>{{ item.label }}</span>
-    </div>
+  <div class="component-list">
+    <el-row :gutter="8">
+      <el-col v-for="(item, index) in state.componentList" :key="index" :span="12">
+        <el-card shadow="hover" :data-index="index" :draggable="true" @dragstart="handleDragStart">
+          <el-icon><Box /></el-icon>
+          <span class="ml-1">{{ item.label }}</span>
+        </el-card>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script setup>
 import { reactive } from 'vue'
+import { Box } from '@element-plus/icons-vue'
 import componentList from './component-list'
 
 const state = reactive({
   componentList: componentList
 })
 const handleDragStart = (e) => {
-  e.dataTransfer.setData('index', e.target.dataset.index)
+  console.log(e)
+  console.log(e.target.dataset.index)
+  // e.dataTransfer.setData('index', e.target.dataset.index)
 }
 </script>
 
 <style lang="scss" scoped>
 .component-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
   padding: 10px;
+  :deep(.el-col) {
+    margin-top: 10px;
+  }
 
-  .list {
-    width: 45%;
-    border: 1px solid #ddd;
-    cursor: grab;
-    margin-bottom: 10px;
-    text-align: center;
-    color: #333;
-    padding: 2px 5px;
+  :deep(.el-card__body) {
+    padding: 6px 12px;
+    font-size: 12px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    cursor: grab;
 
     &:active {
       cursor: grabbing;
-    }
-
-    .iconfont {
-      margin-right: 4px;
-      font-size: 20px;
-    }
-
-    .icon-wenben,
-    .icon-tupian {
-      font-size: 18px;
     }
   }
 }
