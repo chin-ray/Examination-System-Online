@@ -16,8 +16,8 @@ export const mainStore = defineStore("main", {
     return {
       editMode: 'edit', // 编辑器模式 edit preview
       canvasStyleData: { // 页面全局数据
-        width: 1200,
-        height: 740,
+        width: 700,
+        height: 600,
         scale: 100,
       },
       isInEdiotr: false, // 是否在编辑器中，用于判断复制、粘贴组件时是否生效，如果在编辑器外，则无视这些操作

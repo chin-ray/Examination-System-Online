@@ -1,13 +1,5 @@
 <template>
-  <div
-    id="editor"
-    class="editor"
-    :class="{ edit: props.isEdit }"
-    :style="{
-      width: changeStyleWithScale(canvasStyleData.width) + 'px',
-      height: changeStyleWithScale(canvasStyleData.height) + 'px'
-    }"
-  ></div>
+  <div id="editor" class="editor" :class="{ edit: props.isEdit }"></div>
 </template>
 
 <script setup>
@@ -39,3 +31,32 @@ const state = reactive({
 console.log(store)
 const canvasStyleData = computed(() => store.canvasStyleData)
 </script>
+
+<style lang="scss" scoped>
+$headerHeight: 50px;
+$padding: 10px;
+
+.editor {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: #fff;
+  margin: auto;
+
+  .lock {
+    opacity: 0.5;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+}
+
+.edit {
+  .component {
+    outline: none;
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

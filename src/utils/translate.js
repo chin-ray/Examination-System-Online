@@ -107,8 +107,10 @@ export function getRotatedPointCoordinate(style, center, name) {
 // 求两点之间的中点坐标
 export function getCenterPoint(p1, p2) {
     return {
-        x: p1.x + ((p2.x - p1.x) / 2),
-        y: p1.y + ((p2.y - p1.y) / 2),
+        x: (p2.x + p1.x) / 2,
+        y: (p2.y + p1.y) / 2,
+        // x: p1.x + ((p2.x - p1.x) / 2),
+        // y: p1.y + ((p2.y - p1.y) / 2),
     }
 }
 
@@ -124,10 +126,12 @@ export function mod360(deg) {
     return (deg + 360) % 360
 }
 
+// 更改宽度
 export function changeStyleWithScale(value) {
     return multiply(value, divide(parseInt(store.canvasStyleData.scale), 100))
 }
 
+// 计算百分比
 export function toPercent(val) {
     return val * 100 + '%'
 }

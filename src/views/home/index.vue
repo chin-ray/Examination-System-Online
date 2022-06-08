@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <header>
-      <div>6312</div>
+      <section class="header">工具</section>
     </header>
     <main>
       <!-- 左侧组件列表 -->
-      <section class="left">
+      <section class="item left">
         <component-list />
       </section>
       <!-- 中间画布 -->
@@ -20,6 +20,8 @@
           <Editor />
         </div>
       </section>
+      <!-- 右侧组件列表 -->
+      <section class="item right">配置区</section>
     </main>
   </div>
 </template>
@@ -27,6 +29,8 @@
 <script setup>
 import ComponentList from './modules/ComponentList' // 左侧列表数据
 import Editor from './modules/Editor/index' // 中间画布
+import { mainStore } from '@/store'
+const store = mainStore()
 
 const handleDrop = (e) => {
   e.preventDefault()
@@ -67,50 +71,54 @@ const deselectCurComponent = (e) => {
 
 <style lang="scss">
 $headerHeight: 50px;
-$padding: 10px;
+$padding: 8px;
+$leftWidth: 250px;
+$rightWidth: 250px;
 
 .home {
   height: 100vh;
-  background: #f1f2f6;
+  background-color: #f1f2f6;
 
   header {
     height: $headerHeight;
     padding: $padding;
+
+    .header {
+      height: 100%;
+      background-color: #fff;
+    }
   }
 
   main {
     height: calc(100% - #{$headerHeight});
     position: relative;
 
-    .left {
+    .item {
       position: absolute;
       height: 100%;
-      width: 200px;
-      left: 0;
+      width: $leftWidth;
       top: 0;
-      padding-top: 10px;
-      background-color: #eff2f7;
+      padding-top: $padding;
+      background-color: #fff;
+    }
+    .left {
+      left: 0;
     }
 
     .right {
-      position: absolute;
-      height: 100%;
-      width: 262px;
       right: 0;
-      top: 0;
     }
 
     .center {
-      margin-left: 200px;
-      margin-right: 262px;
       height: 100%;
+      margin-left: $leftWidth;
+      margin-right: $rightWidth;
+      padding: $padding;
       overflow: auto;
-      padding: 20px;
 
       .content {
         width: 100%;
         height: 100%;
-        overflow: auto;
       }
     }
   }
