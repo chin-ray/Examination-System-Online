@@ -69,6 +69,7 @@ const state = reactive({
 
 const isActive = computed(() => state.active && !state.element.isLock)
 
+// 点击外层包裹组件
 const handleMouseDownOnShape = (e) => {
   store.setInEditorStatus(true)
   store.setClickComponentStatus(true)

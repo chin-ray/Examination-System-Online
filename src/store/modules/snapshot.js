@@ -21,7 +21,6 @@ export default {
                         })
                     }
                 }
-
                 setComponentData(componentData)
             }
         },

@@ -1,5 +1,5 @@
 <template>
-  <div id="editor" class="editor" :class="{ edit: props.isEdit }">
+  <div id="editor" class="editor" :class="{ edit: props.isEdit }" @mousedown="handleMouseDown">
     <!-- 网格线 -->
     <Grid />
     <Shape
@@ -25,7 +25,7 @@
 </template>
 
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, reactive, onMounted } from 'vue'
 import Grid from './Grid'
 import Shape from './Shape'
 import { getStyle } from '@/utils/style'
@@ -39,9 +39,53 @@ const props = defineProps({
   }
 })
 
+const state = reactive({
+  editorX: 0,
+  editorY: 0,
+  start: {
+    // 选中区域的起点
+    x: 0,
+    y: 0
+  },
+  width: 0,
+  height: 0,
+  isShowArea: false
+})
+
 const componentData = computed(() => store.componentData)
 const curComponent = computed(() => store.curComponent)
 
+// 点击空白画板
+const handleMouseDown = (e) => {
+  // 如果没有选中组件 在画布上点击时需要调用 e.preventDefault() 防止触发 drop 事件
+  if (!store.curComponent) {
+    e.preventDefault()
+  }
+}
+
+// 单击鼠标右键
+const handleContextMenu = (e) => {
+  e.stopPropagation()
+  e.preventDefault()
+
+  // 计算菜单相对于编辑器的位移
+  let target = e.target
+  let top = e.offsetY
+  let left = e.offsetX
+  while (target instanceof SVGElement) {
+    target = target.parentNode
+  }
+
+  while (!target.className.includes('editor')) {
+    left += target.offsetLeft
+    top += target.offsetTop
+    target = target.parentNode
+  }
+
+  store.showContextMenu({ top, left })
+}
+
+// 外层包裹组件样式
 const getShapeStyle = (style) => {
   const result = {}
   ;['width', 'height', 'top', 'left', 'rotate'].forEach((attr) => {
@@ -51,10 +95,10 @@ const getShapeStyle = (style) => {
       result.transform = 'rotate(' + style[attr] + 'deg)'
     }
   })
-
   return result
 }
 
+// 组件样式
 const getComponentStyle = (style) => {
   return getStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
