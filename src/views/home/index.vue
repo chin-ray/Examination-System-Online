@@ -30,9 +30,9 @@
 <script setup>
 import { onBeforeMount, onMounted } from 'vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
-import ComponentList from './modules/ComponentList' // 左侧组件列表
+import ComponentList from './ComponentList' // 左侧组件列表
 import componentList from '@/components/draggable/component-list' // 左侧列表数据
-import Editor from './modules/Editor/index' // 中间画布
+import Editor from './Editor/index' // 中间画布
 import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
@@ -42,11 +42,12 @@ const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
   const index = e.dataTransfer.getData('index')
-  const rectInfo = store.editor.getBoundingClientRect()
+  // const rectInfo = store.editor.getBoundingClientRect()
   if (index) {
     const component = deepCopy(componentList[index])
-    component.style.top = e.clientY - rectInfo.y
-    component.style.left = e.clientX - rectInfo.x
+    console.log(component)
+    component.style.top = e.layerY - component.style.height / 2
+    component.style.left = e.layerX - component.style.width / 2
     component.id = generateID()
     store.addComponent({ component })
     // store.recordSnapshot()

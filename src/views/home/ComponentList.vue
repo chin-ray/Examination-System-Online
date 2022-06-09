@@ -32,8 +32,8 @@ const handleDragStart = (e) => {
   }
 
   :deep(.el-card__body) {
-    padding: 6px 12px;
-    font-size: 12px;
+    padding: 8px 14px;
+    font-size: 14px;
     display: flex;
     align-items: center;
     cursor: grab;
