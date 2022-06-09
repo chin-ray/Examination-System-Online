@@ -5,6 +5,7 @@
       :key="item"
       class="shape-point"
       :style="getPointStyle(item)"
+      @mousedown="handleMouseDownOnPoint(item, $event)"
     ></div>
     <slot></slot>
   </div>
@@ -13,6 +14,7 @@
 <script setup>
 import { reactive, computed, watchEffect, onMounted } from 'vue'
 import { mod360 } from '@/utils/translate'
+import calculateComponentPositonAndSize from '@/utils/calculateComponentPositonAndSize'
 import { mainStore } from '@/store'
 const store = mainStore()
 
@@ -189,6 +191,81 @@ const getCursor = () => {
   })
 
   return result
+}
+
+// 在8个拖拽点按下鼠标（选中并拖拽）
+const handleMouseDownOnPoint = (point, e) => {
+  store.setInEditorStatus(true)
+  store.setClickComponentStatus(true)
+  e.stopPropagation()
+  e.preventDefault()
+
+  const style = { ...state.defaultStyle }
+
+  // 组件宽高比
+  const proportion = style.width / style.height
+
+  // 组件中心点
+  const center = {
+    x: style.left + style.width / 2,
+    y: style.top + style.height / 2
+  }
+
+  // 获取画布位移信息
+  const editorRectInfo = store.editor.getBoundingClientRect()
+
+  // 获取 point 与实际拖动基准点的差值 @justJokee
+  // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
+  const pointRect = e.target.getBoundingClientRect()
+  // 当前点击圆点相对于画布的中心坐标
+  const curPoint = {
+    x: Math.round(pointRect.left - editorRectInfo.left + e.target.offsetWidth / 2),
+    y: Math.round(pointRect.top - editorRectInfo.top + e.target.offsetHeight / 2)
+  }
+
+  // 获取对称点的坐标
+  const symmetricPoint = {
+    x: center.x - (curPoint.x - center.x),
+    y: center.y - (curPoint.y - center.y)
+  }
+
+  // 是否需要保存快照
+  let needSave = false
+  let isFirst = true
+
+  // const needLockProportion = this.isNeedLockProportion()
+  const needLockProportion = false
+  const move = (moveEvent) => {
+    // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
+    // 因此第一次点击时不触发 move 事件
+    if (isFirst) {
+      isFirst = false
+      return
+    }
+
+    needSave = true
+    const curPositon = {
+      x: moveEvent.clientX - editorRectInfo.left,
+      y: moveEvent.clientY - editorRectInfo.top
+    }
+
+    calculateComponentPositonAndSize(point, style, curPositon, proportion, needLockProportion, {
+      center,
+      curPoint,
+      symmetricPoint
+    })
+
+    store.setShapeStyle(style)
+  }
+
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    needSave && store.recordSnapshot()
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 watchEffect(() => {
