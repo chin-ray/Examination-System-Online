@@ -126,7 +126,7 @@ const handleMouseDownOnShape = (e) => {
 const selectCurComponent = (e) => {
   e.stopPropagation()
   e.preventDefault()
-  // store.hideContextMenu()
+  store.hideContextMenu()
 }
 
 // 获取8个点位置

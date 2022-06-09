@@ -37,8 +37,6 @@ import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
 
-const isClickComponent = computed(() => store.isClickComponent)
-
 // 拖拽结束
 const handleDrop = (e) => {
   e.preventDefault()
@@ -50,7 +48,7 @@ const handleDrop = (e) => {
     component.style.left = e.layerX - component.style.width / 2
     component.id = generateID()
     store.addComponent({ component })
-    // store.recordSnapshot()
+    store.recordSnapshot()
   }
 }
 // 拖拽过程
@@ -69,7 +67,7 @@ const handleMouseUp = (e) => {
   deselectCurComponent(e)
 }
 const deselectCurComponent = (e) => {
-  if (!isClickComponent) {
+  if (!store.isClickComponent) {
     store.setCurComponent({ component: null, index: null })
   }
   // 0 左击 1 滚轮 2 右击

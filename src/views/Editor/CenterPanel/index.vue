@@ -1,7 +1,14 @@
 <template>
-  <div id="editor" class="editor" :class="{ edit: props.isEdit }" @mousedown="handleMouseDown">
+  <div
+    id="editor"
+    class="editor"
+    :class="{ edit: props.isEdit }"
+    @contextmenu="handleContextMenu"
+    @mousedown="handleMouseDown"
+  >
     <!-- 网格线 -->
     <Grid />
+    <ContextMenu />
     <Shape
       v-for="(item, index) in componentData"
       :key="item.id"
@@ -27,6 +34,7 @@
 <script setup>
 import { computed, reactive, onMounted } from 'vue'
 import Grid from './Grid'
+import ContextMenu from './ContextMenu'
 import Shape from './Shape'
 import { getStyle } from '@/utils/style'
 import { mainStore } from '@/store'
@@ -61,6 +69,7 @@ const handleMouseDown = (e) => {
   if (!store.curComponent) {
     e.preventDefault()
   }
+  store.hideContextMenu()
 }
 
 // 单击鼠标右键

@@ -1,5 +1,5 @@
 <template>
-  <div v-show="menuShow" class="contextmenu" :style="{ top: menuTop + 'px', left: menuLeft + 'px' }">
+  <div v-show="menuShow" class="contextmenu" :style="{ top: `${menuTop}px`, left: `${menuLeft}px` }">
     <ul @mouseup="handleMouseUp">
       <template v-if="curComponent">
         <template v-if="!curComponent.isLock">
@@ -21,7 +21,7 @@
 </template>
 
 <script setup>
-import { reactive } from 'vue'
+import { reactive, computed } from 'vue'
 import { mainStore } from '@/store'
 const store = mainStore()
 
@@ -29,59 +29,70 @@ const state = reactive({
   copyData: null
 })
 
-const { menuTop, menuLeft, menuShow, curComponent } = store
+const menuTop = computed(() => store.menuTop)
+const menuLeft = computed(() => store.menuLeft)
+const menuShow = computed(() => store.menuShow)
+const curComponent = computed(() => store.curComponent)
+
+// 点击菜单时不取消当前组件的选中状态
+const handleMouseUp = () => {
+  store.setClickComponentStatus(true)
+}
 
 // 锁定
 const lock = () => {
-  this.$store.commit('lock')
+  store.lock()
 }
 
 // 取消锁定
 const unlock = () => {
-  this.$store.commit('unlock')
+  store.unlock()
 }
 
-// 点击菜单时不取消当前组件的选中状态
-const handleMouseUp = () => {
-  this.$store.commit('setClickComponentStatus', true)
-}
-
+// 剪切
 const cut = () => {
-  this.$store.commit('cut')
+  store.cut()
 }
 
+// 复制
 const copy = () => {
-  this.$store.commit('copy')
+  store.copy()
 }
 
+// 粘贴
 const paste = () => {
-  this.$store.commit('paste', true)
-  this.$store.commit('recordSnapshot')
+  store.paste(true)
+  store.recordSnapshot()
 }
 
+// 删除
 const deleteComponent = () => {
-  this.$store.commit('deleteComponent')
-  this.$store.commit('recordSnapshot')
+  store.deleteComponent()
+  store.recordSnapshot()
 }
 
+// 上移一层
 const upComponent = () => {
-  this.$store.commit('upComponent')
-  this.$store.commit('recordSnapshot')
+  store.upComponent()
+  store.recordSnapshot()
 }
 
+// 下移一层
 const downComponent = () => {
-  this.$store.commit('downComponent')
-  this.$store.commit('recordSnapshot')
+  store.downComponent()
+  store.recordSnapshot()
 }
 
+// 置顶
 const topComponent = () => {
-  this.$store.commit('topComponent')
-  this.$store.commit('recordSnapshot')
+  store.topComponent()
+  store.recordSnapshot()
 }
 
+// 置地
 const bottomComponent = () => {
-  this.$store.commit('bottomComponent')
-  this.$store.commit('recordSnapshot')
+  store.bottomComponent()
+  store.recordSnapshot()
 }
 </script>
 
