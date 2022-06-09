@@ -24,9 +24,9 @@ export const constantRoutes = [
   },
   {
     path: '/',
-    name: 'Home',
-    meta: { title: 'Home' },
-    component: () => import('@/views/home/index.vue'),
+    name: 'Editor',
+    meta: { title: 'Editor' },
+    component: () => import('@/views/Editor/index.vue'),
   },
 ]
 

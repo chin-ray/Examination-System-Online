@@ -7,7 +7,7 @@
     <main>
       <!-- 左侧组件列表 -->
       <section class="item left">
-        <ComponentList />
+        <LeftPanel />
       </section>
       <!-- 中间画布 -->
       <section class="center">
@@ -18,7 +18,7 @@
           @mousedown="handleMouseDown"
           @mouseup="handleMouseUp"
         >
-          <Editor />
+          <CenterPanel />
         </div>
       </section>
       <!-- 右侧组件列表 -->
@@ -30,9 +30,9 @@
 <script setup>
 import { onBeforeMount, onMounted } from 'vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
-import ComponentList from './ComponentList' // 左侧组件列表
+import LeftPanel from './LeftPanel' // 左侧组件列表
 import componentList from '@/components/draggable/component-list' // 左侧列表数据
-import Editor from './Editor/index' // 中间画布
+import CenterPanel from './CenterPanel/index' // 中间画布
 import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
@@ -45,7 +45,6 @@ const handleDrop = (e) => {
   // const rectInfo = store.editor.getBoundingClientRect()
   if (index) {
     const component = deepCopy(componentList[index])
-    console.log(component)
     component.style.top = e.layerY - component.style.height / 2
     component.style.left = e.layerX - component.style.width / 2
     component.id = generateID()
