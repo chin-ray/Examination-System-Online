@@ -1,12 +1,20 @@
 <template>
-  <div class="shape" :class="state.active && 'active'" @click="selectCurComponent">
-    <div v-for="item in isActive() ? pointList : []" :key="item" class="shape-point"></div>
+  <div class="shape" :class="state.active && 'active'" @click="selectCurComponent" @mousedown="handleMouseDownOnShape">
+    <div
+      v-for="item in isActive ? state.pointList : []"
+      :key="item"
+      class="shape-point"
+      :style="getPointStyle(item)"
+    ></div>
     <slot></slot>
   </div>
 </template>
 
 <script setup>
-import { reactive, watchEffect } from 'vue'
+import { reactive, computed, watchEffect, onMounted } from 'vue'
+import { mod360 } from '@/utils/translate'
+import { mainStore } from '@/store'
+const store = mainStore()
 
 const props = defineProps({
   active: {
@@ -57,9 +65,60 @@ const state = reactive({
   cursors: {}
 })
 
-const isActive = () => {
-  return state.active && !state.element.isLock
+const isActive = computed(() => state.active && !state.element.isLock)
+
+const handleMouseDownOnShape = (e) => {
+  store.setInEditorStatus(true)
+  store.setClickComponentStatus(true)
+
+  e.preventDefault()
+  e.stopPropagation()
+  store.setCurComponent({ component: state.element, index: state.index })
+  if (state.element.isLock) return
+
+  state.cursors = getCursor() // 根据旋转角度获取光标位置
+
+  const pos = { ...state.defaultStyle }
+  const startY = e.clientY
+  const startX = e.clientX
+  // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
+  const startTop = Number(pos.top)
+  const startLeft = Number(pos.left)
+
+  // 如果元素没有移动，则不保存快照
+  let hasMove = false
+  const move = (moveEvent) => {
+    hasMove = true
+    const curX = moveEvent.clientX
+    const curY = moveEvent.clientY
+    pos.top = curY - startY + startTop
+    pos.left = curX - startX + startLeft
+
+    // 修改当前组件样式
+    store.setShapeStyle(pos)
+    // 等更新完当前组件的样式并绘制到屏幕后再判断是否需要吸附
+    // 如果不使用 $nextTick，吸附后将无法移动
+    // nextTick(() => {
+    //   // 触发元素移动事件，用于显示标线、吸附功能
+    //   // 后面两个参数代表鼠标移动方向
+    //   // curY - startY > 0 true 表示向下移动 false 表示向上移动
+    //   // curX - startX > 0 true 表示向右移动 false 表示向左移动
+    //   eventBus.$emit('move', curY - startY > 0, curX - startX > 0)
+    // })
+  }
+
+  const up = () => {
+    hasMove && store.recordSnapshot()
+    // 触发元素停止移动事件，用于隐藏标线
+    // eventBus.$emit('unmove')
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
+
 // 阻止向父组件冒泡
 const selectCurComponent = (e) => {
   e.stopPropagation()
@@ -67,11 +126,82 @@ const selectCurComponent = (e) => {
   // store.hideContextMenu()
 }
 
+// 获取8个点位置
+const getPointStyle = (point) => {
+  const { width, height } = state.defaultStyle
+  const hasT = /t/.test(point)
+  const hasB = /b/.test(point)
+  const hasL = /l/.test(point)
+  const hasR = /r/.test(point)
+  let newLeft = 0
+  let newTop = 0
+
+  // 四个角的点
+  if (point.length === 2) {
+    newLeft = hasL ? 0 : width
+    newTop = hasT ? 0 : height
+  } else {
+    // 上下两点的点，宽度居中
+    if (hasT || hasB) {
+      newLeft = width / 2
+      newTop = hasT ? 0 : height
+    }
+
+    // 左右两边的点，高度居中
+    if (hasL || hasR) {
+      newLeft = hasL ? 0 : width
+      newTop = Math.floor(height / 2)
+    }
+  }
+
+  const style = {
+    marginLeft: '-4px',
+    marginTop: '-4px',
+    left: `${newLeft}px`,
+    top: `${newTop}px`,
+    cursor: state.cursors[point]
+  }
+
+  return style
+}
+const getCursor = () => {
+  const { angleToCursor, initialAngle, pointList } = state
+  const rotate = mod360(store.curComponent.style.rotate) // 取余 360
+  const result = {}
+  let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
+
+  pointList.forEach((point) => {
+    const angle = mod360(initialAngle[point] + rotate)
+    const len = angleToCursor.length
+    while (true) {
+      lastMatchIndex = (lastMatchIndex + 1) % len
+      const angleLimit = angleToCursor[lastMatchIndex]
+      if (angle < 23 || angle >= 338) {
+        result[point] = 'nw-resize'
+        return
+      }
+
+      if (angleLimit.start <= angle && angle < angleLimit.end) {
+        result[point] = angleLimit.cursor + '-resize'
+        return
+      }
+    }
+  })
+
+  return result
+}
+
 watchEffect(() => {
   state.active = props.active
   state.element = props.element
   state.defaultStyle = props.defaultStyle
   state.index = props.index
+})
+
+onMounted(() => {
+  if (store.curComponent) {
+    state.cursors = getCursor() // 根据旋转角度获取光标位置
+  }
 })
 </script>
 

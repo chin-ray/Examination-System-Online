@@ -2,6 +2,7 @@ import { defineStore } from "pinia";
 import getters from './getters'
 import animation from './modules/animation'
 import compose from './modules/compose'
+import snapshot from './modules/snapshot'
 
 // 1.定义容器
 // 参数1： 容器的ID，必须唯一，将来pinia会把所有容器挂载到根容器
@@ -16,6 +17,7 @@ export const mainStore = defineStore("main", {
   state: () => {
     return {
       ...compose.state,
+      ...snapshot.state,
 
       editMode: 'edit', // 编辑器模式 edit preview
       canvasStyleData: { // 页面全局数据
@@ -42,6 +44,7 @@ export const mainStore = defineStore("main", {
   actions: {
     ...animation.actions,
     ...compose.actions,
+    ...snapshot.actions,
 
     setClickComponentStatus(status) {
       this.isClickComponent = status
@@ -64,12 +67,12 @@ export const mainStore = defineStore("main", {
       this.curComponentIndex = index
     },
 
-    setShapeStyle({ curComponent }, { top, left, width, height, rotate }) {
-      if (top) curComponent.style.top = top
-      if (left) curComponent.style.left = left
-      if (width) curComponent.style.width = width
-      if (height) curComponent.style.height = height
-      if (rotate) curComponent.style.rotate = rotate
+    setShapeStyle({ top, left, width, height, rotate }) {
+      if (top) this.curComponent.style.top = top
+      if (left) this.curComponent.style.left = left
+      if (width) this.curComponent.style.width = width
+      if (height) this.curComponent.style.height = height
+      if (rotate) this.curComponent.style.rotate = rotate
     },
 
     setShapeSingleStyle({ curComponent }, { key, value }) {
