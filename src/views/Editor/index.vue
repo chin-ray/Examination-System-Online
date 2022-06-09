@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted } from 'vue'
+import { onBeforeMount, onMounted, computed } from 'vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import LeftPanel from './LeftPanel' // 左侧组件列表
 import componentList from '@/components/draggable/component-list' // 左侧列表数据
@@ -37,12 +37,13 @@ import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
 
+const isClickComponent = computed(() => store.isClickComponent)
+
 // 拖拽结束
 const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
   const index = e.dataTransfer.getData('index')
-  // const rectInfo = store.editor.getBoundingClientRect()
   if (index) {
     const component = deepCopy(componentList[index])
     component.style.top = e.layerY - component.style.height / 2
@@ -59,15 +60,22 @@ const handleDragOver = (e) => {
 }
 // 鼠标单击按下
 const handleMouseDown = (e) => {
-  // console.log('handleMouseDown')
+  e.stopPropagation()
+  store.setClickComponentStatus(false)
+  store.setInEditorStatus(true)
 }
 // 鼠标单击抬起
 const handleMouseUp = (e) => {
-  // console.log('handleMouseUp')
-  deselectCurComponent()
+  deselectCurComponent(e)
 }
 const deselectCurComponent = (e) => {
-  // console.log('deselectCurComponent')
+  if (!isClickComponent) {
+    store.setCurComponent({ component: null, index: null })
+  }
+  // 0 左击 1 滚轮 2 右击
+  if (e.button != 2) {
+    // store.hideContextMenu()
+  }
 }
 
 onBeforeMount(() => {

@@ -1,7 +1,5 @@
 <template>
   <div class="shape" :class="state.active && 'active'" @click="selectCurComponent">
-    <span v-show="isActive()" class="iconfont icon-xiangyouxuanzhuan"></span>
-    <span v-show="element.isLock" class="iconfont icon-suo"></span>
     <div v-for="item in isActive() ? pointList : []" :key="item" class="shape-point"></div>
     <slot></slot>
   </div>
@@ -99,26 +97,5 @@ watchEffect(() => {
   height: 8px;
   border-radius: 50%;
   z-index: 1;
-}
-
-.icon-xiangyouxuanzhuan {
-  position: absolute;
-  top: -34px;
-  left: 50%;
-  transform: translateX(-50%);
-  cursor: grab;
-  color: #59c7f9;
-  font-size: 20px;
-  font-weight: 600;
-
-  &:active {
-    cursor: grabbing;
-  }
-}
-
-.icon-suo {
-  position: absolute;
-  top: 0;
-  right: 0;
 }
 </style>

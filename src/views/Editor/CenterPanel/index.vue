@@ -7,6 +7,7 @@
       :key="item.id"
       :default-style="item.style"
       :style="getShapeStyle(item.style)"
+      :active="item.id === (curComponent || {}).id"
       :element="item"
       :index="index"
       :class="{ lock: item.isLock }"
@@ -15,6 +16,7 @@
         :is="item.component"
         :id="'component' + item.id"
         class="component"
+        :style="getComponentStyle(item.style)"
         :prop-value="item.propValue"
         :element="item"
       />
@@ -23,7 +25,7 @@
 </template>
 
 <script setup>
-import { reactive, computed, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import Grid from './Grid'
 import Shape from './Shape'
 import { getStyle } from '@/utils/style'
@@ -37,20 +39,8 @@ const props = defineProps({
   }
 })
 
-const state = reactive({
-  editorX: 0,
-  editorY: 0,
-  start: {
-    // 选中区域的起点
-    x: 0,
-    y: 0
-  },
-  width: 0,
-  height: 0,
-  isShowArea: false
-})
-
 const componentData = computed(() => store.componentData)
+const curComponent = computed(() => store.curComponent)
 
 const getShapeStyle = (style) => {
   const result = {}
