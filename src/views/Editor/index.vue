@@ -10,7 +10,7 @@
         <LeftPanel />
       </section>
       <!-- 中间画布 -->
-      <section class="center">
+      <section class="center" :style="`margin-right: calc(40px + ${curComponent ? '300px' : '0px'})`">
         <div
           class="content"
           @drop="handleDrop"
@@ -22,7 +22,9 @@
         </div>
       </section>
       <!-- 右侧组件列表 -->
-      <section class="item right rowCC">配置区</section>
+      <section v-show="curComponent" class="item right px-2">
+        <RightPanel />
+      </section>
     </main>
   </div>
 </template>
@@ -31,11 +33,14 @@
 import { onBeforeMount, onMounted, computed } from 'vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import LeftPanel from './LeftPanel' // 左侧组件列表
-import componentList from '@/components/draggable/component-list' // 左侧列表数据
 import CenterPanel from './CenterPanel/index' // 中间画布
+import RightPanel from './RightPanel/index' // 右侧画布
+import componentList from '@/components/draggable/component-list' // 左侧列表数据
 import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
+
+const curComponent = computed(() => store.curComponent)
 
 // 拖拽结束
 const handleDrop = (e) => {
@@ -88,7 +93,7 @@ onMounted(() => {
 $headerHeight: 50px;
 $padding: 8px;
 $leftWidth: 220px;
-$rightWidth: 250px;
+$rightWidth: 300px;
 
 .home {
   height: 100vh;
@@ -129,7 +134,6 @@ $rightWidth: 250px;
     .center {
       height: 100%;
       margin-left: calc(#{$leftWidth} + 40px);
-      margin-right: calc(#{$rightWidth} + 40px);
       padding-bottom: $padding;
 
       .content {
