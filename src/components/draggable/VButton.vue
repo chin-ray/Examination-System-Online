@@ -1,5 +1,5 @@
 <template>
-  <button class="v-button">{{ props.propValue }}</button>
+  <el-button>{{ props.propValue }}</el-button>
 </template>
 
 <script setup>

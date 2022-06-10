@@ -293,7 +293,7 @@ onMounted(() => {
 }
 
 .active {
-  outline: 1px solid #70c0ff;
+  outline: 1px dashed #70c0ff;
   user-select: none;
 }
 
