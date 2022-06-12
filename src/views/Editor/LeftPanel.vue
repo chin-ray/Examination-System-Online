@@ -19,6 +19,7 @@ import componentList from '@/components/draggable/component-list'
 const state = reactive({
   componentList: componentList
 })
+
 const handleDragStart = (e) => {
   e.dataTransfer.setData('index', e.target.dataset.index)
 }
