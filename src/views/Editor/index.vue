@@ -10,7 +10,7 @@
         <LeftPanel />
       </section>
       <!-- 中间画布 -->
-      <section class="center" :style="`margin-right: calc(40px + ${curComponent ? '300px' : '0px'})`">
+      <section class="center">
         <div
           class="content"
           @drop="handleDrop"
@@ -22,8 +22,9 @@
         </div>
       </section>
       <!-- 右侧组件列表 -->
-      <section v-show="curComponent" class="item right px-2">
-        <RightPanel />
+      <section class="item right px-2">
+        <RightPanel v-if="curComponent" />
+        <el-empty v-else :image-size="120" description="暂未选中编辑元素" />
       </section>
     </main>
   </div>
@@ -32,7 +33,7 @@
 <script setup>
 import { onBeforeMount, onMounted, computed } from 'vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
-import LeftPanel from './LeftPanel' // 左侧组件列表
+import LeftPanel from './LeftPanel/index' // 左侧组件列表
 import CenterPanel from './CenterPanel/index' // 中间画布
 import RightPanel from './RightPanel/index' // 右侧画布
 import componentList from '@/components/draggable/component-list' // 左侧列表数据
@@ -134,6 +135,7 @@ $rightWidth: 300px;
     .center {
       height: 100%;
       margin-left: calc(#{$leftWidth} + 40px);
+      margin-right: calc(#{$rightWidth} + 40px);
       padding-bottom: $padding;
 
       .content {
