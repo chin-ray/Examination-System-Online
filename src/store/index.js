@@ -71,6 +71,16 @@ export const mainStore = defineStore("main", {
     },
 
     setShapeStyle({ top, left, width, height, rotate }) {
+      // 限制组件可移动左边界
+      if (left <= 0) left = 0
+      // 获取画布信息
+      const editorWidth = this.editor.getBoundingClientRect().width
+      const componentWidth = this.curComponent.style.width
+      // 限制组件可移动右边界
+      if (editorWidth < componentWidth + left) {
+        left = editorWidth - componentWidth
+      }
+
       if (top) this.curComponent.style.top = top
       if (left) this.curComponent.style.left = left
       if (width) this.curComponent.style.width = width

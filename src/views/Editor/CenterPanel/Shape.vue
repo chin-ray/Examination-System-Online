@@ -1,12 +1,5 @@
 <template>
   <div class="shape" :class="state.active && 'active'" @click="selectCurComponent" @mousedown="handleMouseDownOnShape">
-    <div
-      v-for="item in isActive ? state.pointList : []"
-      :key="item"
-      class="shape-point"
-      :style="getPointStyle(item)"
-      @mousedown="handleMouseDownOnPoint(item, $event)"
-    ></div>
     <slot></slot>
   </div>
 </template>
