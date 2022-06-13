@@ -1,13 +1,11 @@
 <template>
-  <div class="shape" :class="state.active && 'active'" @click="selectCurComponent" @mousedown="handleMouseDownOnShape">
+  <div class="shape" :class="isActive && 'active'" @mousedown="handleMouseDownOnShape">
     <slot></slot>
   </div>
 </template>
 
 <script setup>
 import { reactive, computed, watchEffect, onMounted } from 'vue'
-import { mod360 } from '@/utils/translate'
-import calculateComponentPositonAndSize from '@/utils/calculateComponentPositonAndSize'
 import { mainStore } from '@/store'
 const store = mainStore()
 
@@ -33,32 +31,7 @@ const props = defineProps({
   }
 })
 
-const state = reactive({
-  pointList: ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l'], // 八个方向
-  initialAngle: {
-    // 每个点对应的初始角度
-    lt: 0,
-    t: 45,
-    rt: 90,
-    r: 135,
-    rb: 180,
-    b: 225,
-    lb: 270,
-    l: 315
-  },
-  angleToCursor: [
-    // 每个范围的角度对应的光标
-    { start: 338, end: 23, cursor: 'nw' },
-    { start: 23, end: 68, cursor: 'n' },
-    { start: 68, end: 113, cursor: 'ne' },
-    { start: 113, end: 158, cursor: 'e' },
-    { start: 158, end: 203, cursor: 'se' },
-    { start: 203, end: 248, cursor: 's' },
-    { start: 248, end: 293, cursor: 'sw' },
-    { start: 293, end: 338, cursor: 'w' }
-  ],
-  cursors: {}
-})
+const state = reactive({})
 
 const isActive = computed(() => state.active && !state.element.isLock)
 
@@ -69,10 +42,9 @@ const handleMouseDownOnShape = (e) => {
 
   e.preventDefault()
   e.stopPropagation()
+  store.hideContextMenu()
   store.setCurComponent({ component: state.element, index: state.index })
   if (state.element.isLock) return
-
-  state.cursors = getCursor() // 根据旋转角度获取光标位置
 
   const pos = { ...state.defaultStyle }
   const startY = e.clientY
@@ -102,160 +74,12 @@ const handleMouseDownOnShape = (e) => {
     //   eventBus.$emit('move', curY - startY > 0, curX - startX > 0)
     // })
   }
-
   const up = () => {
     hasMove && store.recordSnapshot()
     // 触发元素停止移动事件，用于隐藏标线
     // eventBus.$emit('unmove')
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
-  }
-
-  document.addEventListener('mousemove', move)
-  document.addEventListener('mouseup', up)
-}
-
-// 阻止向父组件冒泡
-const selectCurComponent = (e) => {
-  e.stopPropagation()
-  e.preventDefault()
-  store.hideContextMenu()
-}
-
-// 获取8个点位置
-const getPointStyle = (point) => {
-  const { width, height } = state.defaultStyle
-  const hasT = /t/.test(point)
-  const hasB = /b/.test(point)
-  const hasL = /l/.test(point)
-  const hasR = /r/.test(point)
-  let newLeft = 0
-  let newTop = 0
-
-  // 四个角的点
-  if (point.length === 2) {
-    newLeft = hasL ? 0 : width
-    newTop = hasT ? 0 : height
-  } else {
-    // 上下两点的点，宽度居中
-    if (hasT || hasB) {
-      newLeft = width / 2
-      newTop = hasT ? 0 : height
-    }
-
-    // 左右两边的点，高度居中
-    if (hasL || hasR) {
-      newLeft = hasL ? 0 : width
-      newTop = Math.floor(height / 2)
-    }
-  }
-
-  const style = {
-    marginLeft: '-4px',
-    marginTop: '-4px',
-    left: `${newLeft}px`,
-    top: `${newTop}px`,
-    cursor: state.cursors[point]
-  }
-
-  return style
-}
-const getCursor = () => {
-  const { angleToCursor, initialAngle, pointList } = state
-  const rotate = mod360(store.curComponent.style.rotate) // 取余 360
-  const result = {}
-  let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
-
-  pointList.forEach((point) => {
-    const angle = mod360(initialAngle[point] + rotate)
-    const len = angleToCursor.length
-    while (true) {
-      lastMatchIndex = (lastMatchIndex + 1) % len
-      const angleLimit = angleToCursor[lastMatchIndex]
-      if (angle < 23 || angle >= 338) {
-        result[point] = 'nw-resize'
-        return
-      }
-
-      if (angleLimit.start <= angle && angle < angleLimit.end) {
-        result[point] = angleLimit.cursor + '-resize'
-        return
-      }
-    }
-  })
-
-  return result
-}
-
-// 在8个拖拽点按下鼠标（选中并拖拽）
-const handleMouseDownOnPoint = (point, e) => {
-  store.setInEditorStatus(true)
-  store.setClickComponentStatus(true)
-  e.stopPropagation()
-  e.preventDefault()
-
-  const style = { ...state.defaultStyle }
-
-  // 组件宽高比
-  const proportion = style.width / style.height
-
-  // 组件中心点
-  const center = {
-    x: style.left + style.width / 2,
-    y: style.top + style.height / 2
-  }
-
-  // 获取画布位移信息
-  const editorRectInfo = store.editor.getBoundingClientRect()
-
-  // 获取 point 与实际拖动基准点的差值 @justJokee
-  // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
-  const pointRect = e.target.getBoundingClientRect()
-  // 当前点击圆点相对于画布的中心坐标
-  const curPoint = {
-    x: Math.round(pointRect.left - editorRectInfo.left + e.target.offsetWidth / 2),
-    y: Math.round(pointRect.top - editorRectInfo.top + e.target.offsetHeight / 2)
-  }
-
-  // 获取对称点的坐标
-  const symmetricPoint = {
-    x: center.x - (curPoint.x - center.x),
-    y: center.y - (curPoint.y - center.y)
-  }
-
-  // 是否需要保存快照
-  let needSave = false
-  let isFirst = true
-
-  // const needLockProportion = this.isNeedLockProportion()
-  const needLockProportion = false
-  const move = (moveEvent) => {
-    // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
-    // 因此第一次点击时不触发 move 事件
-    if (isFirst) {
-      isFirst = false
-      return
-    }
-
-    needSave = true
-    const curPositon = {
-      x: moveEvent.clientX - editorRectInfo.left,
-      y: moveEvent.clientY - editorRectInfo.top
-    }
-
-    calculateComponentPositonAndSize(point, style, curPositon, proportion, needLockProportion, {
-      center,
-      curPoint,
-      symmetricPoint
-    })
-
-    store.setShapeStyle(style)
-  }
-
-  const up = () => {
-    document.removeEventListener('mousemove', move)
-    document.removeEventListener('mouseup', up)
-    needSave && store.recordSnapshot()
   }
 
   document.addEventListener('mousemove', move)
@@ -269,11 +93,7 @@ watchEffect(() => {
   state.index = props.index
 })
 
-onMounted(() => {
-  if (store.curComponent) {
-    state.cursors = getCursor() // 根据旋转角度获取光标位置
-  }
-})
+onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>
@@ -281,22 +101,12 @@ onMounted(() => {
   position: absolute;
 
   &:hover {
-    cursor: move;
+    cursor: pointer; //move
   }
 }
 
 .active {
   outline: 1px dashed #70c0ff;
   user-select: none;
-}
-
-.shape-point {
-  position: absolute;
-  background: #fff;
-  border: 1px solid #59c7f9;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  z-index: 1;
 }
 </style>

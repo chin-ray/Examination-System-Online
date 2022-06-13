@@ -7,7 +7,7 @@
     @mousedown="handleMouseDown"
   >
     <!-- 网格线 -->
-    <Grid />
+    <!-- <Grid /> -->
     <ContextMenu />
     <Shape
       v-for="(item, index) in componentData"

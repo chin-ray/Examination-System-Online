@@ -36,7 +36,7 @@ import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import LeftPanel from './LeftPanel/index' // 左侧组件列表
 import CenterPanel from './CenterPanel/index' // 中间画布
 import RightPanel from './RightPanel/index' // 右侧画布
-import componentList from '@/components/draggable/component-list' // 左侧列表数据
+import componentList from './LeftPanel/component-list' // 左侧列表数据
 import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()

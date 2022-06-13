@@ -13,7 +13,7 @@ const pinia = createPinia();
 app.use(router);
 app.use(pinia);
 
-import VButton from '@/components/draggable/VButton' // 注册自定义组件
-app.component('VButton', VButton)
+import UButton from '@/components/draggable/UButton' // 注册自定义组件
+app.component('UButton', UButton)
 
 app.mount('#app')

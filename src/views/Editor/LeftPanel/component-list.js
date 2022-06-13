@@ -1,3 +1,6 @@
+import { mainStore } from '@/store'
+const store = mainStore()
+
 // 公共样式
 export const commonStyle = {
     rotate: 0,
@@ -11,12 +14,35 @@ export const commonAttr = {
     isLock: false, // 是否锁定组件
 }
 
+// .getBoundingClientRect().width
+console.log(store.editor)
+
 // 编辑器左侧组件列表
 const list = [
     {
-        component: 'v-button',
+        component: 'u-button',
         label: '按钮',
         propValue: '按钮',
+        icon: 'button',
+        style: {
+            width: 100,
+            height: 34,
+            borderWidth: 1,
+            borderColor: '',
+            borderRadius: '',
+            fontSize: 14,
+            fontWeight: 500,
+            lineHeight: '',
+            letterSpacing: 0,
+            textAlign: '',
+            color: '',
+            backgroundColor: '',
+        },
+    },
+    {
+        component: 'u-layout',
+        label: '外层容器',
+        propValue: '外层容器',
         icon: 'button',
         style: {
             width: 100,
