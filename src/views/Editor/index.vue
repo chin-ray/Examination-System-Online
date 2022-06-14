@@ -2,6 +2,7 @@
   <div class="home">
     <header>
       <section class="header rowCC">工具栏</section>
+      <TemplateView />
     </header>
 
     <main>
@@ -21,11 +22,16 @@
           <CenterPanel />
         </div>
       </section>
+      <!-- 悬浮工具栏 -->
+      <div class="toolbar">
+        <el-space direction="vertical">
+          <el-button link :icon="Document" />
+        </el-space>
+      </div>
       <!-- 右侧组件列表 -->
       <section class="item right px-2">
         <RightPanel v-if="curComponent" />
         <el-empty v-else :image-size="120" description="暂未选中编辑元素" />
-        <TemplateView />
       </section>
     </main>
   </div>
@@ -33,6 +39,7 @@
 
 <script setup>
 import { onBeforeMount, onMounted, computed } from 'vue'
+import { Document } from '@element-plus/icons-vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import LeftPanel from './LeftPanel/index' // 左侧组件列表
 import CenterPanel from './CenterPanel/index' // 中间画布
@@ -144,6 +151,15 @@ $rightWidth: 300px;
         width: 100%;
         height: 100%;
       }
+    }
+
+    .toolbar {
+      position: absolute;
+      right: $rightWidth;
+      top: 0;
+      width: 40px;
+      display: flex;
+      justify-content: center;
     }
   }
 }

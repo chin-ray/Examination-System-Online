@@ -1,18 +1,12 @@
 <template>
-  <el-button @click="showCode">源码</el-button>
-  <el-dialog
-    title="代码预览"
-    v-model="state.codeDialogVisible"
-    width="70%"
-    top="10vh"
-    :center="true"
-    :before-close="handleClose"
-  >
-    <codemirror v-model:value="code" :border="true" :KeepCursorInEnd="true" :options="state.cmOption" />
-  </el-dialog>
+  <el-link type="primary" :icon="Document" :underline="false" class="template-view" @click="showCode">源码预览</el-link>
+  <el-drawer v-model="state.codeDialogVisible" title="源码预览" size="40%" direction="rtl" :before-close="handleClose">
+    <codemirror v-model:value="code" :options="state.cmOption" />
+  </el-drawer>
 </template>
 
 <script setup>
+import { Document } from '@element-plus/icons-vue'
 import Codemirror from 'codemirror-editor-vue3'
 import { computed, reactive } from 'vue'
 
@@ -53,6 +47,11 @@ const handleClose = () => {
 </script>
 
 <style scoped lang="scss">
+.template-view {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
 :deep(.CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like) {
   padding-left: 2rem;
 }
