@@ -17,10 +17,6 @@
             <el-icon><Scissor /></el-icon>
             剪切
           </li>
-          <li @click="paste">
-            <el-icon><Document /></el-icon>
-            粘贴
-          </li>
           <li @click="deleteComponent">
             <el-icon><Delete /></el-icon>
             删除
@@ -51,7 +47,7 @@
           解锁
         </li>
       </template>
-      <li v-else @click="paste">
+      <li v-else-if="copyData" @click="paste">
         <el-icon><Document /></el-icon>
         粘贴
       </li>
@@ -60,7 +56,7 @@
 </template>
 
 <script setup>
-import { reactive, computed } from 'vue'
+import { computed } from 'vue'
 import {
   DocumentCopy,
   Scissor,
@@ -74,13 +70,10 @@ import {
   ArrowDown
 } from '@element-plus/icons-vue'
 import { mainStore } from '@/store'
-import { e } from 'mathjs'
+
 const store = mainStore()
 
-const state = reactive({
-  copyData: null
-})
-
+const copyData = computed(() => store.copyData)
 const menuTop = computed(() => store.menuTop)
 const menuLeft = computed(() => store.menuLeft)
 const menuShow = computed(() => store.menuShow)

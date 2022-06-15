@@ -14,9 +14,6 @@ export const commonAttr = {
     isLock: false, // 是否锁定组件
 }
 
-// .getBoundingClientRect().width
-console.log(store.editor)
-
 // 编辑器左侧组件列表
 const list = [
     {
