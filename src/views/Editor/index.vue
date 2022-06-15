@@ -102,7 +102,7 @@ onMounted(() => {
 <style lang="scss">
 $headerHeight: 50px;
 $padding: 8px;
-$leftWidth: 220px;
+$leftWidth: 270px;
 $rightWidth: 300px;
 
 .home {

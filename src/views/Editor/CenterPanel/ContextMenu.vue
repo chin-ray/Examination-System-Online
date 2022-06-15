@@ -1,5 +1,5 @@
 <template>
-  <div v-show="menuShow" class="contextmenu" :style="{ top: `${menuTop}px`, left: `${menuLeft}px` }">
+  <div v-show="menuShow" class="contextmenu" :style="{ top: `${menuTop - 6}px`, left: `${menuLeft}px` }">
     <ul @mouseup="handleMouseUp">
       <template v-if="curComponent">
         <template v-if="!curComponent.isLock">
