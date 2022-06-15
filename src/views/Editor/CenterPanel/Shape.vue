@@ -82,6 +82,7 @@ const handleMouseDownOnShape = (e) => {
     document.removeEventListener('mouseup', up)
   }
 
+  if (e.button !== 0) return //仅鼠标左键点击可以移动
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
 }

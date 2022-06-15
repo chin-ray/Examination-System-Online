@@ -1,28 +1,80 @@
 <template>
-  <div v-show="menuShow" class="contextmenu" :style="{ top: `${menuTop - 6}px`, left: `${menuLeft}px` }">
+  <div
+    v-show="menuShow"
+    class="contextmenu"
+    :style="{ top: `${menuTop}px`, left: `${menuLeft}px` }"
+    @mousedown="EventAction"
+    @contextmenu="EventAction"
+  >
     <ul @mouseup="handleMouseUp">
       <template v-if="curComponent">
         <template v-if="!curComponent.isLock">
-          <li @click="copy">复制</li>
-          <li @click="paste">粘贴</li>
-          <li @click="cut">剪切</li>
-          <li @click="deleteComponent">删除</li>
-          <li @click="lock">锁定</li>
-          <li @click="topComponent">置顶</li>
-          <li @click="bottomComponent">置底</li>
-          <li @click="upComponent">上移</li>
-          <li @click="downComponent">下移</li>
+          <li @click="copy">
+            <el-icon><DocumentCopy /></el-icon>
+            复制
+          </li>
+          <li @click="cut">
+            <el-icon><Scissor /></el-icon>
+            剪切
+          </li>
+          <li @click="paste">
+            <el-icon><Document /></el-icon>
+            粘贴
+          </li>
+          <li @click="deleteComponent">
+            <el-icon><Delete /></el-icon>
+            删除
+          </li>
+          <li @click="lock">
+            <el-icon><Lock /></el-icon>
+            锁定
+          </li>
+          <li @click="topComponent">
+            <el-icon><Top /></el-icon>
+            置顶
+          </li>
+          <li @click="bottomComponent">
+            <el-icon><Bottom /></el-icon>
+            置底
+          </li>
+          <li @click="upComponent">
+            <el-icon><ArrowUp /></el-icon>
+            上移
+          </li>
+          <li @click="downComponent">
+            <el-icon><ArrowDown /></el-icon>
+            下移
+          </li>
         </template>
-        <li v-else @click="unlock">解锁</li>
+        <li v-else @click="unlock">
+          <el-icon><Unlock /></el-icon>
+          解锁
+        </li>
       </template>
-      <li v-else @click="paste">粘贴</li>
+      <li v-else @click="paste">
+        <el-icon><Document /></el-icon>
+        粘贴
+      </li>
     </ul>
   </div>
 </template>
 
 <script setup>
 import { reactive, computed } from 'vue'
+import {
+  DocumentCopy,
+  Scissor,
+  Document,
+  Delete,
+  Lock,
+  Unlock,
+  Top,
+  Bottom,
+  ArrowUp,
+  ArrowDown
+} from '@element-plus/icons-vue'
 import { mainStore } from '@/store'
+import { e } from 'mathjs'
 const store = mainStore()
 
 const state = reactive({
@@ -33,6 +85,12 @@ const menuTop = computed(() => store.menuTop)
 const menuLeft = computed(() => store.menuLeft)
 const menuShow = computed(() => store.menuShow)
 const curComponent = computed(() => store.curComponent)
+
+// 取消事件冒泡
+const EventAction = (e) => {
+  e.stopPropagation()
+  e.preventDefault()
+}
 
 // 点击菜单时不取消当前组件的选中状态
 const handleMouseUp = () => {
@@ -49,14 +107,14 @@ const unlock = () => {
   store.unlock()
 }
 
-// 剪切
-const cut = () => {
-  store.cut()
-}
-
 // 复制
 const copy = () => {
   store.copy()
+}
+
+// 剪切
+const cut = () => {
+  store.cut()
 }
 
 // 粘贴
@@ -89,7 +147,7 @@ const topComponent = () => {
   store.recordSnapshot()
 }
 
-// 置地
+// 置底
 const bottomComponent = () => {
   store.bottomComponent()
   store.recordSnapshot()
@@ -107,21 +165,31 @@ const bottomComponent = () => {
     background-color: #fff;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    margin: 5px 0;
-    padding: 6px 0;
+    margin: 0;
+    padding: 0;
 
     li {
       font-size: 14px;
-      padding: 0 20px;
+      padding: 0 14px;
+      margin: 4px;
+      border-radius: 4px;
       position: relative;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       color: #606266;
-      height: 34px;
-      line-height: 34px;
+      height: 26px;
+      line-height: 26px;
       box-sizing: border-box;
       cursor: pointer;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      i {
+        margin-right: 6px;
+      }
 
       &:hover {
         background-color: #f5f7fa;

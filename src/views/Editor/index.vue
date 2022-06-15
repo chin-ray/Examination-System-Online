@@ -85,10 +85,6 @@ const deselectCurComponent = (e) => {
   if (!store.isClickComponent) {
     store.setCurComponent({ component: null, index: null })
   }
-  // 0 左击 1 滚轮 2 右击
-  if (e.button != 2) {
-    // store.hideContextMenu()
-  }
 }
 
 onBeforeMount(() => {

@@ -4,6 +4,7 @@ import animation from './modules/animation'
 import compose from './modules/compose'
 import snapshot from './modules/snapshot'
 import contextmenu from './modules/contextmenu'
+import actions from './modules/actions'
 
 // 1.定义容器
 // 参数1： 容器的ID，必须唯一，将来pinia会把所有容器挂载到根容器
@@ -20,6 +21,7 @@ export const mainStore = defineStore("main", {
       ...compose.state,
       ...snapshot.state,
       ...contextmenu.state,
+      ...actions.state,
 
       editMode: 'edit', // 编辑器模式 edit preview
       canvasStyleData: { // 页面全局数据
@@ -48,6 +50,7 @@ export const mainStore = defineStore("main", {
     ...compose.actions,
     ...snapshot.actions,
     ...contextmenu.actions,
+    ...actions.actions,
 
     setClickComponentStatus(status) {
       this.isClickComponent = status
