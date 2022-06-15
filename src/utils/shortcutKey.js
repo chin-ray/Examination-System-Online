@@ -10,9 +10,6 @@ const ctrlKey = 17,
     yKey = 89, // 重做
     zKey = 90, // 撤销
 
-    gKey = 71, // 组合
-    bKey = 66, // 拆分
-
     lKey = 76, // 锁定
     uKey = 85, // 解锁
 
@@ -22,7 +19,7 @@ const ctrlKey = 17,
     deleteKey = 46, // 删除
     eKey = 69 // 清空画布
 
-export const keycodes = [66, 67, 68, 69, 71, 76, 80, 83, 85, 86, 88, 89, 90]
+export const keycodes = [67, 68, 69, 76, 80, 83, 85, 86, 88, 89, 90]
 
 // 与组件状态无关的操作
 const basemap = {
@@ -45,8 +42,6 @@ const unlockMap = {
     ...basemap,
     [cKey]: copy,
     [xKey]: cut,
-    [gKey]: compose,
-    [bKey]: decompose,
     [dKey]: deleteComponent,
     [deleteKey]: deleteComponent,
     [lKey]: lock,
@@ -92,13 +87,13 @@ function copy() {
     store.copy()
 }
 
+function cut() {
+    store.cut()
+}
+
 function paste() {
     store.paste()
     store.recordSnapshot()
-}
-
-function cut() {
-    store.cut()
 }
 
 function redo() {
@@ -107,21 +102,6 @@ function redo() {
 
 function undo() {
     store.undo()
-}
-
-function compose() {
-    if (store.state.areaData.components.length) {
-        store.compose()
-        store.recordSnapshot()
-    }
-}
-
-function decompose() {
-    const curComponent = store.state.curComponent
-    if (curComponent && !curComponent.isLock && curComponent.component == 'Group') {
-        store.decompose()
-        store.recordSnapshot()
-    }
 }
 
 function save() {
@@ -133,7 +113,7 @@ function preview() {
 }
 
 function deleteComponent() {
-    if (store.state.curComponent) {
+    if (store.curComponent) {
         store.deleteComponent()
         store.recordSnapshot()
     }

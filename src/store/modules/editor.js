@@ -44,14 +44,14 @@ export default {
             const absorbSize = 2 // 吸附大小
             // 限制组件可移动边界
             const clientRectInfo = this.editor.getBoundingClientRect() // 画布信息
-
             const editorWidth = clientRectInfo.width
+            const editorHeight = clientRectInfo.height
             const componentWidth = this.curComponent.style.width
+            const componentHeight = this.curComponent.style.height
+
             if (editorWidth <= componentWidth + left + absorbSize) {
                 left = editorWidth - componentWidth
             }
-            const editorHeight = clientRectInfo.height
-            const componentHeight = this.curComponent.style.height
             if (editorHeight <= componentHeight + top + absorbSize) {
                 top = editorHeight - componentHeight
             }
@@ -74,6 +74,23 @@ export default {
         },
 
         addComponent({ component, index }) {
+            let { left, top } = component.style
+            if (left < 0) left = 0
+            if (top < 0) top = 0
+            const clientRectInfo = this.editor.getBoundingClientRect() // 画布信息
+            const editorWidth = clientRectInfo.width
+            const editorHeight = clientRectInfo.height
+            const componentWidth = component.style.width
+            const componentHeight = component.style.height
+            if (editorWidth <= componentWidth + left) {
+                left = editorWidth - componentWidth
+            }
+            if (editorHeight <= componentHeight + top) {
+                top = editorHeight - componentHeight
+            }
+            component.style.left = left
+            component.style.top = top
+
             if (index !== undefined) {
                 this.componentData.splice(index, 0, component)
             } else {

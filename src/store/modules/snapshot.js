@@ -15,20 +15,20 @@ export default {
                     const needClean = !componentData.find(component => this.curComponent.id === component.id)
 
                     if (needClean) {
-                        setCurComponent({
+                        this.setCurComponent({
                             component: null,
                             index: null,
                         })
                     }
                 }
-                setComponentData(componentData)
+                this.setComponentData(componentData)
             }
         },
 
         redo() {
             if (this.snapshotIndex < this.snapshotData.length - 1) {
                 this.snapshotIndex++
-                setComponentData(deepCopy(this.snapshotData[this.snapshotIndex]))
+                this.setComponentData(deepCopy(this.snapshotData[this.snapshotIndex]))
             }
         },
 
