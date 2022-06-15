@@ -2,13 +2,10 @@
   <div
     id="editor"
     class="editor"
-    :class="{ edit: props.isEdit }"
+    :class="{ 'in-editor': isDragInEdiotr }"
     @contextmenu="handleContextMenu"
     @mousedown="handleMouseDown"
   >
-    <!-- 网格线 -->
-    <!-- <Grid /> -->
-    <ContextMenu />
     <Shape
       v-for="(item, index) in componentData"
       :key="item.id"
@@ -28,6 +25,9 @@
         :element="item"
       />
     </Shape>
+    <!-- 网格线 -->
+    <!-- <Grid /> -->
+    <ContextMenu />
   </div>
 </template>
 
@@ -39,13 +39,6 @@ import Shape from './Shape'
 import { getStyle } from '@/utils/style'
 import { mainStore } from '@/store'
 const store = mainStore()
-
-const props = defineProps({
-  isEdit: {
-    type: Boolean,
-    default: true
-  }
-})
 
 const state = reactive({
   editorX: 0,
@@ -60,6 +53,7 @@ const state = reactive({
   isShowArea: false
 })
 
+const isDragInEdiotr = computed(() => store.isDragInEdiotr)
 const componentData = computed(() => store.componentData)
 const curComponent = computed(() => store.curComponent)
 
@@ -135,13 +129,13 @@ $padding: 10px;
       cursor: not-allowed;
     }
   }
-}
-
-.edit {
   .component {
-    outline: none;
     width: 100%;
     height: 100%;
   }
+}
+
+.in-editor {
+  outline: 1px solid #70c0ff;
 }
 </style>

@@ -16,6 +16,8 @@
           class="content"
           @drop="handleDrop"
           @dragover="handleDragOver"
+          @dragenter="onDragEnter"
+          @dragleave="onDragLeave"
           @mousedown="handleMouseDown"
           @mouseup="handleMouseUp"
         >
@@ -56,6 +58,7 @@ const curComponent = computed(() => store.curComponent)
 const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
+  store.setIsDragInEdiotr(false)
   const index = e.dataTransfer.getData('index')
   if (index) {
     const component = deepCopy(componentList[index])
@@ -70,6 +73,14 @@ const handleDrop = (e) => {
 const handleDragOver = (e) => {
   e.preventDefault()
   e.dataTransfer.dropEffect = 'copy'
+}
+// 进入editor
+const onDragEnter = () => {
+  store.setIsDragInEdiotr(true)
+}
+// 离开editor
+const onDragLeave = () => {
+  store.setIsDragInEdiotr(false)
 }
 // 鼠标单击按下
 const handleMouseDown = (e) => {
