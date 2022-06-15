@@ -81,6 +81,10 @@ export function listenGlobalKeyDown() {
     window.onmousedown = () => {
         store.setInEditorStatus(false)
     }
+
+    window.ondragend = () => {
+        store.setIsDragInEdiotr(false)
+    }
 }
 
 function copy() {

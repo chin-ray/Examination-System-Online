@@ -15,6 +15,8 @@
 import { reactive } from 'vue'
 import { Box } from '@element-plus/icons-vue'
 import componentList from './component-list'
+import { mainStore } from '@/store'
+const store = mainStore()
 
 const state = reactive({
   componentList: componentList
@@ -22,6 +24,7 @@ const state = reactive({
 
 const handleDragStart = (e) => {
   e.dataTransfer.setData('index', e.target.dataset.index)
+  store.setIsDragInEdiotr(true)
 }
 </script>
 

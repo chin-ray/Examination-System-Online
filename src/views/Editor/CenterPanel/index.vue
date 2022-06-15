@@ -32,26 +32,13 @@
 </template>
 
 <script setup>
-import { computed, reactive, onMounted } from 'vue'
+import { computed, onMounted } from 'vue'
 import Grid from './Grid'
 import ContextMenu from './ContextMenu'
 import Shape from './Shape'
 import { getStyle } from '@/utils/style'
 import { mainStore } from '@/store'
 const store = mainStore()
-
-const state = reactive({
-  editorX: 0,
-  editorY: 0,
-  start: {
-    // 选中区域的起点
-    x: 0,
-    y: 0
-  },
-  width: 0,
-  height: 0,
-  isShowArea: false
-})
 
 const isDragInEdiotr = computed(() => store.isDragInEdiotr)
 const componentData = computed(() => store.componentData)
