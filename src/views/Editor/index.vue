@@ -31,7 +31,7 @@
       <!-- 右侧组件列表 -->
       <section class="item right px-2">
         <RightPanel v-if="curComponent" />
-        <el-empty v-else :image-size="120" description="暂未选中编辑元素" />
+        <el-empty v-else :image-size="120" description="未选中编辑元素" />
       </section>
     </main>
   </div>
@@ -69,7 +69,7 @@ const handleDrop = (e) => {
 // 拖拽过程
 const handleDragOver = (e) => {
   e.preventDefault()
-  e.dataTransfer.dropEffect = 'copy'
+  e.dataTransfer.dropEffect = 'grabbing'
 }
 // 鼠标单击按下
 const handleMouseDown = (e) => {

@@ -18,10 +18,10 @@ export const mainStore = defineStore("main", {
    */
   state: () => {
     return {
-      ...editor.state,
       ...snapshot.state,
       ...contextmenu.state,
       ...copy.state,
+      ...editor.state,
     };
   },
   /**
@@ -32,10 +32,10 @@ export const mainStore = defineStore("main", {
    * 类似于组件的methods，封装业务逻辑（同步，异步都可以），修改state
    */
   actions: {
-    ...editor.actions,
     ...animation.actions,
     ...snapshot.actions,
     ...contextmenu.actions,
     ...copy.actions,
+    ...editor.actions,
   },
 });
