@@ -1,7 +1,15 @@
 <template>
   <el-link type="primary" :icon="Document" :underline="false" class="template-view" @click="showCode">源码预览</el-link>
-  <el-drawer v-model="state.codeDialogVisible" title="源码预览" size="40%" direction="rtl" :before-close="handleClose">
-    <codemirror v-model:value="code" :options="state.cmOption" />
+  <el-drawer
+    v-if="state.codeDialogVisible"
+    v-model="state.codeDialogVisible"
+    title="源码预览"
+    size="40%"
+    direction="rtl"
+    :before-close="handleClose"
+  >
+    <!-- <codemirror v-model:value="code" :options="state.cmOption" /> -->
+    <code-editor :mode="'json'" :readonly="true" v-model="state.codeStore" :user-worker="false" />
   </el-drawer>
 </template>
 
@@ -9,6 +17,7 @@
 import { Document } from '@element-plus/icons-vue'
 import Codemirror from 'codemirror-editor-vue3'
 import { computed, reactive } from 'vue'
+import CodeEditor from './code-editor.vue'
 
 const code = computed({
   get() {

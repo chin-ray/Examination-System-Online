@@ -28,6 +28,7 @@
     <!-- 网格线 -->
     <!-- <Grid /> -->
     <ContextMenu />
+    <el-empty v-if="!componentData.length" :image-size="120" description="拖动到这" />
   </div>
 </template>
 

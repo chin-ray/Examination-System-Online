@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
+    "ace-builds": "1.6.0",
     "prettier": "^2.6.2",
     "sass": "1.32.12",
     "scss": "0.2.4",

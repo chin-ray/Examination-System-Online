@@ -69,7 +69,7 @@ const handleDrop = (e) => {
 // 拖拽过程
 const handleDragOver = (e) => {
   e.preventDefault()
-  e.dataTransfer.dropEffect = 'grabbing'
+  e.dataTransfer.dropEffect = 'copy'
 }
 // 鼠标单击按下
 const handleMouseDown = (e) => {
