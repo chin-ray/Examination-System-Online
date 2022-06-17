@@ -2,17 +2,8 @@
   <el-link type="primary" :icon="Document" :underline="false" class="template-view" @click="showCode">源码预览</el-link>
 
   <div class="custom-drawer">
-    <el-drawer
-      v-if="state.drawerVisible"
-      v-model="state.drawerVisible"
-      title="源码预览"
-      size="40%"
-      direction="rtl"
-      :before-close="handleClose"
-    >
-      <el-scrollbar height="calc(100vh - 50px - 10px)">
-        <code-editor :mode="'html'" v-model="state.codeStore" />
-      </el-scrollbar>
+    <el-drawer v-model="state.drawerVisible" title="源码预览" size="60%" direction="rtl" :before-close="handleClose">
+      <code-editor v-if="state.drawerVisible" :mode="'html'" v-model="state.codeStore" />
     </el-drawer>
   </div>
 </template>
@@ -21,6 +12,7 @@
 import { Document } from '@element-plus/icons-vue'
 import { reactive } from 'vue'
 import CodeEditor from './code-editor.vue'
+import { generateCode } from '@/utils/code-generator'
 
 const state = reactive({
   drawerVisible: false,
@@ -39,9 +31,11 @@ const state = reactive({
 })
 const showCode = () => {
   state.drawerVisible = true
+  state.codeStore = generateCode('formJson')
 }
 const handleClose = () => {
   state.drawerVisible = false
+  state.codeStore = ''
 }
 </script>
 

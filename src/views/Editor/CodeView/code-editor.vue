@@ -34,12 +34,12 @@ const props = defineProps({
   },
   mode: {
     type: String,
-    default: 'javascript'
+    default: 'html'
   },
   userWorker: {
-    //是否开启语法检查，默认开启
+    //是否开启语法检查，默认关闭
     type: Boolean,
-    default: true
+    default: false
   }
 })
 const emits = defineEmits(['update:modelValue'])
@@ -84,9 +84,9 @@ onMounted(() => {
   addAutoCompletion(ace) //添加自定义代码提示！！
 
   state.aceEditor = ace.edit(aceRef.value, {
-    maxLines: 10000, // 最大行数，超过会自动出现滚动条
-    minLines: 45, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
-    fontSize: 12, // 编辑器内字体大小
+    maxLines: 36, // 最大行数，超过会自动出现滚动条
+    minLines: 36, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
+    fontSize: 14, // 编辑器内字体大小
     theme: state.themePath, // 默认设置的主题
     mode: state.modePath, // 默认设置的语言模式
     tabSize: 2, // 制表符设置为2个空格大小
