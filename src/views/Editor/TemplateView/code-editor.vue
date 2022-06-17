@@ -1,7 +1,7 @@
 <template>
-  <div class="ace-container">
+  <div class="px-1">
     <!-- 官方文档中使用id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
-    <div class="ace-editor" ref="aceRef"></div>
+    <div ref="aceRef"></div>
   </div>
 </template>
 
@@ -84,8 +84,8 @@ onMounted(() => {
   addAutoCompletion(ace) //添加自定义代码提示！！
 
   state.aceEditor = ace.edit(aceRef.value, {
-    maxLines: 20, // 最大行数，超过会自动出现滚动条
-    minLines: 5, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
+    maxLines: 10000, // 最大行数，超过会自动出现滚动条
+    minLines: 45, // 最小行数，还未到最大行数时，编辑器会自动伸缩大小
     fontSize: 12, // 编辑器内字体大小
     theme: state.themePath, // 默认设置的主题
     mode: state.modePath, // 默认设置的语言模式
@@ -122,8 +122,4 @@ watchEffect(() => {
 })
 </script>
 
-<style lang="scss" scoped>
-.ace-editor {
-  min-height: 300px;
-}
-</style>
+<style lang="scss" scoped></style>

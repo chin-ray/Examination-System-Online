@@ -1,16 +1,20 @@
 <template>
   <el-link type="primary" :icon="Document" :underline="false" class="template-view" @click="showCode">源码预览</el-link>
-  <el-drawer
-    v-if="state.codeDialogVisible"
-    v-model="state.codeDialogVisible"
-    title="源码预览"
-    size="40%"
-    direction="rtl"
-    :before-close="handleClose"
-  >
-    <!-- <codemirror v-model:value="code" :options="state.cmOption" /> -->
-    <code-editor :mode="'html'" :readonly="true" v-model="state.codeStore" />
-  </el-drawer>
+
+  <div class="custom-drawer">
+    <el-drawer
+      v-if="state.drawerVisible"
+      v-model="state.drawerVisible"
+      title="源码预览"
+      size="40%"
+      direction="rtl"
+      :before-close="handleClose"
+    >
+      <el-scrollbar height="calc(100vh - 50px - 10px)">
+        <code-editor :mode="'html'" v-model="state.codeStore" />
+      </el-scrollbar>
+    </el-drawer>
+  </div>
 </template>
 
 <script setup>
@@ -19,7 +23,7 @@ import { reactive } from 'vue'
 import CodeEditor from './code-editor.vue'
 
 const state = reactive({
-  codeDialogVisible: false,
+  drawerVisible: false,
   codeStore: '',
   cmOption: {
     mode: 'text/x-vue', // 语言模式
@@ -34,10 +38,10 @@ const state = reactive({
   }
 })
 const showCode = () => {
-  state.codeDialogVisible = true
+  state.drawerVisible = true
 }
 const handleClose = () => {
-  state.codeDialogVisible = false
+  state.drawerVisible = false
 }
 </script>
 
@@ -49,5 +53,13 @@ const handleClose = () => {
 }
 :deep(.CodeMirror pre.CodeMirror-line, .CodeMirror pre.CodeMirror-line-like) {
   padding-left: 2rem;
+}
+.custom-drawer:deep(.el-drawer) {
+  .el-drawer__header {
+    margin-bottom: 0;
+  }
+  .el-drawer__body {
+    padding: 0;
+  }
 }
 </style>
