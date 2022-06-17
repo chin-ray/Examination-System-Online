@@ -25,22 +25,6 @@
             <el-icon><Lock /></el-icon>
             锁定
           </li>
-          <li @click="topComponent">
-            <el-icon><Top /></el-icon>
-            置顶
-          </li>
-          <li @click="bottomComponent">
-            <el-icon><Bottom /></el-icon>
-            置底
-          </li>
-          <li @click="upComponent">
-            <el-icon><ArrowUp /></el-icon>
-            上移
-          </li>
-          <li @click="downComponent">
-            <el-icon><ArrowDown /></el-icon>
-            下移
-          </li>
         </template>
         <li v-else @click="unlock">
           <el-icon><Unlock /></el-icon>
@@ -121,30 +105,6 @@ const deleteComponent = () => {
   store.deleteComponent()
   store.recordSnapshot()
 }
-
-// 上移一层
-const upComponent = () => {
-  store.upComponent()
-  store.recordSnapshot()
-}
-
-// 下移一层
-const downComponent = () => {
-  store.downComponent()
-  store.recordSnapshot()
-}
-
-// 置顶
-const topComponent = () => {
-  store.topComponent()
-  store.recordSnapshot()
-}
-
-// 置底
-const bottomComponent = () => {
-  store.bottomComponent()
-  store.recordSnapshot()
-}
 </script>
 
 <style lang="scss" scoped>
@@ -163,7 +123,7 @@ const bottomComponent = () => {
 
     li {
       font-size: 14px;
-      padding: 0 14px;
+      padding: 0 10px;
       margin: 4px;
       border-radius: 4px;
       position: relative;
@@ -171,8 +131,8 @@ const bottomComponent = () => {
       overflow: hidden;
       text-overflow: ellipsis;
       color: #606266;
-      height: 26px;
-      line-height: 26px;
+      height: 30px;
+      line-height: 30px;
       box-sizing: border-box;
       cursor: pointer;
 
