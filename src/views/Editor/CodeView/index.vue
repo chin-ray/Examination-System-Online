@@ -2,7 +2,7 @@
   <el-link type="primary" :icon="Document" :underline="false" class="template-view" @click="showCode">源码预览</el-link>
 
   <div class="custom-drawer">
-    <el-drawer v-model="state.drawerVisible" title="源码预览" size="60%" direction="rtl" :before-close="handleClose">
+    <el-drawer v-model="state.drawerVisible" title="源码预览" size="50%" direction="rtl" :before-close="handleClose">
       <code-editor v-if="state.drawerVisible" :mode="'html'" v-model="state.codeStore" />
     </el-drawer>
   </div>
