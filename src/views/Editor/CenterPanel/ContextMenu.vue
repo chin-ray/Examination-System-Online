@@ -35,6 +35,14 @@
         <el-icon><Document /></el-icon>
         粘贴
       </li>
+      <li @click="">
+        <el-icon><RefreshLeft /></el-icon>
+        撤销
+      </li>
+      <li @click="">
+        <el-icon><RefreshRight /></el-icon>
+        重做
+      </li>
     </ul>
   </div>
 </template>
@@ -48,10 +56,8 @@ import {
   Delete,
   Lock,
   Unlock,
-  Top,
-  Bottom,
-  ArrowUp,
-  ArrowDown
+  RefreshLeft,
+  RefreshRight
 } from '@element-plus/icons-vue'
 import { mainStore } from '@/store'
 

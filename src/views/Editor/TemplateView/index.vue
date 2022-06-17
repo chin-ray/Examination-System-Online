@@ -9,32 +9,18 @@
     :before-close="handleClose"
   >
     <!-- <codemirror v-model:value="code" :options="state.cmOption" /> -->
-    <code-editor :mode="'json'" :readonly="true" v-model="state.codeStore" :user-worker="false" />
+    <code-editor :mode="'html'" :readonly="true" v-model="state.codeStore" />
   </el-drawer>
 </template>
 
 <script setup>
 import { Document } from '@element-plus/icons-vue'
-import Codemirror from 'codemirror-editor-vue3'
-import { computed, reactive } from 'vue'
+import { reactive } from 'vue'
 import CodeEditor from './code-editor.vue'
-
-const code = computed({
-  get() {
-    return state.codeStore
-  },
-  set(newVal) {
-    state.codeStore = newVal
-  }
-})
 
 const state = reactive({
   codeDialogVisible: false,
-  codeStore: `var i = 0;
-for (; i < 9; i++) {
-  console.log(i);
-  // more statements
-}`,
+  codeStore: '',
   cmOption: {
     mode: 'text/x-vue', // 语言模式
     theme: 'default', // 主题

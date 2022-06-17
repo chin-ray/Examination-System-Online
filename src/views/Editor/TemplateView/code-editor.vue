@@ -1,7 +1,7 @@
 <template>
   <div class="ace-container">
     <!-- 官方文档中使用id，这里禁止使用，在后期打包后容易出现问题，使用 ref 或者 DOM 就行 -->
-    <div class="ace-editor" ref="ace"></div>
+    <div class="ace-editor" ref="aceRef"></div>
   </div>
 </template>
 
