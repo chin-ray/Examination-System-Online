@@ -29,7 +29,7 @@
         </el-space>
       </div>
       <!-- 右侧组件列表 -->
-      <section class="item right px-2">
+      <section class="item right pl-2">
         <RightPanel v-if="curComponent" />
         <el-empty v-else :image-size="120" description="未选中编辑元素" />
       </section>
@@ -63,6 +63,7 @@ const handleDrop = (e) => {
     component.style.left = e.layerX - component.style.width / 2
     component.id = generateID()
     store.addComponent({ component })
+    store.setCurComponent({ component, index: store.componentData.length - 1 })
     store.recordSnapshot()
   }
 }
