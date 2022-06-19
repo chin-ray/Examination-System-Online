@@ -22,3 +22,7 @@ export function deepCopy(target) {
 export function $(selector) {
     return document.querySelector(selector)
 }
+
+export function isNotNull(value) {
+    return (value !== null) && (value !== undefined);
+}

@@ -1,10 +1,17 @@
-export const generateCode = function (formJson) {
-  let formJsonStr = JSON.stringify(formJson)
-
+export const generateCode = function (templateStr = '', jsStr = '', scopedCss = '', globalCss = '') {
   return `<template>
-  <u-button>按钮</u-button>
+${templateStr}
 </template>
 
 <script setup>
-</script>`
+${jsStr}
+</script>
+
+<style lang="scss" scoped>
+${scopedCss}
+</style>
+
+<style lang="scss">
+${globalCss}
+</style>`
 }
