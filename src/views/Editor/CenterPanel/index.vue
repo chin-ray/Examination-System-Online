@@ -79,19 +79,15 @@ const handleContextMenu = (e) => {
 // 外层包裹组件样式
 const getShapeStyle = (style) => {
   const result = {}
-  ;['width', 'height', 'top', 'left', 'rotate'].forEach((attr) => {
-    if (attr != 'rotate') {
-      result[attr] = style[attr] + 'px'
-    } else {
-      result.transform = 'rotate(' + style[attr] + 'deg)'
-    }
+  ;['height'].forEach((attr) => {
+    result[attr] = style[attr] + 'px'
   })
   return result
 }
 
 // 组件样式
 const getComponentStyle = (style) => {
-  return getStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
+  return getStyle(style, ['top', 'left', 'width', 'height'])
 }
 
 onMounted(() => {
@@ -124,6 +120,6 @@ $padding: 10px;
 }
 
 .in-editor {
-  outline: 1px solid #70c0ff;
+  outline: 2px solid #70c0ff;
 }
 </style>

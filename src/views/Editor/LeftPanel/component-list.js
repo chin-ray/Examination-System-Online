@@ -3,7 +3,6 @@ const store = mainStore()
 
 // 公共样式
 export const commonStyle = {
-    rotate: 0,
     opacity: 1,
 }
 
@@ -37,26 +36,74 @@ const list = [
         },
     },
     {
-        component: 'u-layout',
-        label: '外层容器',
-        propValue: '外层容器',
+        component: 'u-grid-row',
+        label: '栅格',
+        propValue: '栅格',
         icon: 'button',
-        style: {
-            width: 100,
-            height: 34,
-            borderWidth: 1,
-            borderColor: '',
-            borderRadius: '',
-            fontSize: 14,
-            fontWeight: 500,
-            lineHeight: '',
-            letterSpacing: 0,
-            textAlign: '',
-            color: '',
-            backgroundColor: '',
-        },
+        style: {},
     },
+    {
+        component: 'u-grid-row',
+        label: '栅格',
+        propValue: '栅格',
+        icon: 'button',
+        cols: [
+            {
+                "id": "grid-col-46174",
+                "type": "grid-col",
+                "widgetList": [],
+                "options": {
+                    "name": "gridCol46174",
+                    "hidden": false,
+                    "span": 12,
+                    "md": 12,
+                    "sm": 12,
+                    "xs": 12,
+                    "customClass": ""
+                },
+            },
+            {
+                "id": "grid-col-15323",
+                "type": "grid-col",
+                "widgetList": [],
+                "options": {
+                    "name": "gridCol15323",
+                    "hidden": false,
+                    "span": 12,
+                    "md": 12,
+                    "sm": 12,
+                    "xs": 12,
+                    "customClass": ""
+                },
+            }
+        ],
+        options: {
+            "name": "grid120515",
+            "hidden": false,
+            "gutter": 12,
+            "colHeight": null,
+            "customClass": []
+        },
+    }
 ]
+
+const formConfig = {
+    modelName: "formData", // 数据绑定字段
+    refName: "vForm", // ref名称
+    rulesName: "rules", // 规则名称
+    size: "", // 组件大小
+    labelWidth: 80,
+    labelPosition: "left", // 表单label方向
+    labelAlign: "label-left-align", // 表单项label方向
+    cssCode: "",
+    customClass: "",
+    functions: "",
+    layoutType: "PC", // 布局类型 PC/Pad/H5
+    jsonVersion: 3,
+    onFormCreated: "",
+    onFormMounted: "",
+    onFormDataChange: ""
+}
 
 for (let i = 0, len = list.length; i < len; i++) {
     const item = list[i]

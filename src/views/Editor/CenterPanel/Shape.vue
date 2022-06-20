@@ -1,5 +1,5 @@
 <template>
-  <div class="shape" :class="isActive && 'active'" @mousedown="handleMouseDownOnShape">
+  <div class="shape" :class="[isActive && 'active', isInline && 'inline']" @mousedown="handleMouseDownOnShape">
     <slot></slot>
   </div>
 </template>
@@ -99,15 +99,20 @@ onMounted(() => {})
 
 <style lang="scss" scoped>
 .shape {
-  position: absolute;
+  // position: absolute;
+  width: 100%;
 
   &:hover {
     cursor: pointer; //move
   }
 }
 
+.inline {
+  display: inline;
+}
+
 .active {
-  outline: 1px dashed #70c0ff;
+  outline: 1px solid #70c0ff;
   user-select: none;
 }
 </style>

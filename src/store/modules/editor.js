@@ -40,7 +40,7 @@ export default {
             this.curComponentIndex = index
         },
 
-        setShapeStyle({ top, left, width, height, rotate }) {
+        setShapeStyle({ top, left, width, height }) {
             const absorbSize = 2 // 吸附大小
             // 限制组件可移动边界
             const clientRectInfo = this.editor.getBoundingClientRect() // 画布信息
@@ -62,7 +62,6 @@ export default {
             if (left <= absorbSize) this.curComponent.style.left = 0
             if (width) this.curComponent.style.width = width
             if (height) this.curComponent.style.height = height
-            if (rotate) this.curComponent.style.rotate = rotate
         },
 
         setShapeSingleStyle({ curComponent }, { key, value }) {

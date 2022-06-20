@@ -1,3 +1,4 @@
+// 右侧属性编辑器
 export const styleData = [
     { key: 'left', label: 'x 坐标' },
     { key: 'top', label: 'y 坐标' },
@@ -19,6 +20,7 @@ export const styleData = [
 ]
 
 export function getStyle(style, filter = []) {
+    // 必须遍历的样式属性
     const needUnit = [
         'fontSize',
         'width',
@@ -33,14 +35,10 @@ export function getStyle(style, filter = []) {
     const result = {}
     Object.keys(style).forEach(key => {
         if (!filter.includes(key)) {
-            if (key != 'rotate') {
-                result[key] = style[key]
+            result[key] = style[key]
 
-                if (needUnit.includes(key)) {
-                    result[key] += 'px'
-                }
-            } else {
-                result.transform = key + '(' + style[key] + 'deg)'
+            if (needUnit.includes(key)) {
+                result[key] += 'px'
             }
         }
     })
