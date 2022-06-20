@@ -15,8 +15,8 @@ app.use(pinia);
 
 // 注册自定义组件
 import UButton from '@/components/draggable/UButton'
-import ULayout from '@/components/draggable/ULayout'
+import UGridRow from '@/components/draggable/UGridRow'
 app.component('UButton', UButton)
-app.component('ULayout', ULayout)
+app.component('UGridRow', UGridRow)
 
 app.mount('#app')
