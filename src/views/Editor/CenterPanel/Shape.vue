@@ -1,11 +1,12 @@
 <template>
-  <div class="shape" :class="[isActive && 'active', isInline && 'inline']" @mousedown="handleMouseDownOnShape">
+  <div class="shape" :class="[isActive && 'active']" @mousedown="handleMouseDownOnShape">
     <slot></slot>
+    <div v-show="isActive" class="component-handler px">组件名称</div>
   </div>
 </template>
 
 <script setup>
-import { reactive, computed, watchEffect, onMounted } from 'vue'
+import { computed } from 'vue'
 import { mainStore } from '@/store'
 const store = mainStore()
 
@@ -31,9 +32,7 @@ const props = defineProps({
   }
 })
 
-const state = reactive({})
-
-const isActive = computed(() => state.active && !state.element.isLock)
+const isActive = computed(() => props.active && !props.element.isLock)
 
 // 点击外层包裹组件
 const handleMouseDownOnShape = (e) => {
@@ -43,10 +42,10 @@ const handleMouseDownOnShape = (e) => {
   e.preventDefault()
   e.stopPropagation()
   store.hideContextMenu()
-  store.setCurComponent({ component: state.element, index: state.index })
-  if (state.element.isLock) return
+  store.setCurComponent({ component: props.element, index: props.index })
+  if (props.element.isLock) return
 
-  const pos = { ...state.defaultStyle }
+  const pos = { ...props.defaultStyle }
   const startY = e.clientY
   const startX = e.clientX
   // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
@@ -86,33 +85,34 @@ const handleMouseDownOnShape = (e) => {
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
 }
-
-watchEffect(() => {
-  state.active = props.active
-  state.element = props.element
-  state.defaultStyle = props.defaultStyle
-  state.index = props.index
-})
-
-onMounted(() => {})
 </script>
 
 <style lang="scss" scoped>
 .shape {
   // position: absolute;
+  position: relative;
   width: 100%;
 
   &:hover {
     cursor: pointer; //move
   }
-}
 
-.inline {
-  display: inline;
+  &.active {
+    outline: 1px solid #409eff;
+    user-select: none;
+  }
 }
+.component-handler {
+  height: 20px;
+  line-height: 20px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #409eff;
+  outline: 1px solid #409eff;
+  cursor: default;
 
-.active {
-  outline: 1px solid #70c0ff;
-  user-select: none;
+  position: absolute;
+  bottom: -21px;
+  right: 0;
 }
 </style>

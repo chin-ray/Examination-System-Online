@@ -9,7 +9,6 @@
     <Shape
       v-for="(item, index) in componentData"
       :key="item.id"
-      :default-style="item.style"
       :style="getShapeStyle(item.style)"
       :active="item.id === (curComponent || {}).id"
       :element="item"
@@ -85,12 +84,11 @@ onMounted(() => {
 
 <style lang="scss" scoped>
 $headerHeight: 42px;
-$padding: 10px;
 
 .editor {
   min-height: calc(100vh - #{$headerHeight} - 16px);
   width: 100%;
-  padding: 8px;
+  padding: 5px;
   background: #fff;
 
   .lock {
@@ -107,6 +105,6 @@ $padding: 10px;
 }
 
 .in-editor {
-  outline: 2px solid #70c0ff;
+  outline: 2px solid #409eff;
 }
 </style>
