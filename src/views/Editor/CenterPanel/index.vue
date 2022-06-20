@@ -25,8 +25,7 @@
         :element="item"
       />
     </Shape>
-    <!-- 网格线 -->
-    <!-- <Grid /> -->
+    <!-- 右键菜单 -->
     <ContextMenu />
     <el-empty v-if="!componentData.length" :image-size="120" description="拖动到这" />
   </div>
@@ -34,7 +33,6 @@
 
 <script setup>
 import { computed, onMounted } from 'vue'
-import Grid from './Grid'
 import ContextMenu from './ContextMenu'
 import Shape from './Shape'
 import { getStyle } from '@/utils/style'

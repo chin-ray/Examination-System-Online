@@ -23,11 +23,11 @@
         </div>
       </section>
       <!-- 悬浮工具栏 -->
-      <div class="toolbar">
+      <!-- <div class="toolbar">
         <el-space direction="vertical">
           <el-button link :icon="Document" />
         </el-space>
-      </div>
+      </div> -->
       <!-- 右侧组件列表 -->
       <section class="item right pl-2">
         <RightPanel v-if="curComponent" />
@@ -140,8 +140,8 @@ $rightWidth: 300px;
 
     .center {
       height: 100%;
-      margin-left: calc(#{$leftWidth} + 40px);
-      margin-right: calc(#{$rightWidth} + 40px);
+      margin-left: calc(#{$leftWidth} + 10px);
+      margin-right: calc(#{$rightWidth} + 10px);
       padding-bottom: $padding;
 
       .content {
