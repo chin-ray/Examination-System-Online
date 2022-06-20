@@ -1,8 +1,10 @@
 <template>
   <div class="home">
     <header>
-      <section class="header rowCC">工具栏</section>
-      <CodeView />
+      <section class="header rowCC">
+        工具栏
+        <CodeView />
+      </section>
     </header>
 
     <main>

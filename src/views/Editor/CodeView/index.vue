@@ -11,7 +11,7 @@
 <script setup>
 import { Document } from '@element-plus/icons-vue'
 import { reactive } from 'vue'
-import CodeEditor from './code-editor.vue'
+import CodeEditor from '@/components/code-editor/index'
 import { generateCode } from '@/utils/code-generator'
 
 const state = reactive({
