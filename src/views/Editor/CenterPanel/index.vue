@@ -58,18 +58,8 @@ const handleContextMenu = (e) => {
   e.preventDefault()
 
   // 计算菜单相对于编辑器的位移
-  let target = e.target
-  let top = e.offsetY
-  let left = e.offsetX
-  while (target instanceof SVGElement) {
-    target = target.parentNode
-  }
-
-  while (!target.className.includes('editor')) {
-    left += target.offsetLeft
-    top += target.offsetTop
-    target = target.parentNode
-  }
+  let top = e.clientY - 42
+  let left = e.clientX - 270
 
   store.showContextMenu({ top, left })
 }
@@ -94,15 +84,14 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-$headerHeight: 50px;
+$headerHeight: 42px;
 $padding: 10px;
 
 .editor {
-  height: 100%;
+  min-height: calc(100vh - #{$headerHeight} - 16px);
   width: 100%;
-  position: relative;
+  padding: 8px;
   background: #fff;
-  margin: auto;
 
   .lock {
     opacity: 0.5;

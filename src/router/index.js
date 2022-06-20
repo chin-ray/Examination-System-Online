@@ -3,8 +3,6 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 export const constantRoutes = [
   {
     path: '/redirect',
-    hidden: true,
-    // component: Layout,
     children: [
       {
         path: '/redirect/:path(.*)',
@@ -14,13 +12,11 @@ export const constantRoutes = [
   },
   {
     path: '/404',
-    hidden: true,
-    component: () => import('@/views/error-page/404.vue')
+    component: () => import('@/components/error-page/404.vue')
   },
   {
     path: '/401',
-    hidden: true,
-    component: () => import('@/views/error-page/401.vue')
+    component: () => import('@/components/error-page/401.vue')
   },
   {
     path: '/',

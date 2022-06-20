@@ -1,42 +1,36 @@
 <template>
-  <div class="home">
-    <header>
-      <section class="header rowCC">
+  <el-container class="main-container">
+    <el-header class="header">
+      <div class="header-panel rowCC">
         工具栏
         <CodeView />
-      </section>
-    </header>
+      </div>
+    </el-header>
 
-    <main>
+    <el-container>
       <!-- 左侧组件列表 -->
-      <section class="item left">
+      <el-aside class="aside-item left">
         <LeftPanel />
-      </section>
+      </el-aside>
       <!-- 中间画布 -->
-      <section class="center">
-        <div
-          class="content"
+      <el-scrollbar class="container-scroll-bar" height="calc(100vh - 42px)" style="width: 100%" @scroll="onScroll">
+        <el-main
+          class="editor-main"
           @drop="handleDrop"
           @dragover="handleDragOver"
           @mousedown="handleMouseDown"
           @mouseup="handleMouseUp"
         >
           <CenterPanel />
-        </div>
-      </section>
-      <!-- 悬浮工具栏 -->
-      <!-- <div class="toolbar">
-        <el-space direction="vertical">
-          <el-button link :icon="Document" />
-        </el-space>
-      </div> -->
+        </el-main>
+      </el-scrollbar>
       <!-- 右侧组件列表 -->
-      <section class="item right pl-2">
-        <RightPanel v-if="curComponent" />
+      <el-aside class="aside-item right">
+        <RightPanel v-if="curComponent" class="pl-2" />
         <el-empty v-else :image-size="120" description="未选中编辑元素" />
-      </section>
-    </main>
-  </div>
+      </el-aside>
+    </el-container>
+  </el-container>
 </template>
 
 <script setup>
@@ -90,6 +84,11 @@ const deselectCurComponent = (e) => {
   }
 }
 
+// 页面滚动
+const onScroll = () => {
+  store.hideContextMenu()
+}
+
 onBeforeMount(() => {
   listenGlobalKeyDown() // 全局监听按键事件
 })
@@ -99,12 +98,12 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-$headerHeight: 50px;
+$headerHeight: 42px;
 $padding: 8px;
 $leftWidth: 270px;
 $rightWidth: 300px;
 
-.home {
+.main-container {
   height: 100vh;
   background-color: #f1f2f6;
   user-select: none;
@@ -112,54 +111,42 @@ $rightWidth: 300px;
   header {
     height: $headerHeight;
     padding: $padding;
+    padding-bottom: 0;
 
-    .header {
+    .header-panel {
+      width: 100%;
       height: 100%;
       background-color: #fff;
       border-radius: 3px;
     }
   }
 
-  main {
-    height: calc(100% - #{$headerHeight});
-    position: relative;
+  .aside-item {
+    height: calc(100% - #{$padding});
+    padding-top: $padding;
+    margin-top: $padding;
+    background-color: #fff;
 
-    .item {
-      position: absolute;
-      height: 100%;
-      top: 0;
-      padding-top: $padding;
-      background-color: #fff;
-    }
-    .left {
+    &.left {
       width: $leftWidth;
-      left: 0;
     }
-    .right {
+    &.right {
       width: $rightWidth;
-      right: 0;
     }
+  }
 
-    .center {
-      height: 100%;
-      margin-left: calc(#{$leftWidth} + 10px);
-      margin-right: calc(#{$rightWidth} + 10px);
-      padding-bottom: $padding;
-
-      .content {
-        width: 100%;
-        height: 100%;
-      }
+  .container-scroll-bar {
+    .el-scrollbar__view {
+      min-height: calc(100vh - #{$headerHeight} - 16px);
     }
-
-    .toolbar {
-      position: absolute;
-      right: $rightWidth;
-      top: 0;
-      width: 40px;
-      display: flex;
-      justify-content: center;
-    }
+  }
+  .editor-main {
+    min-height: calc(100vh - #{$headerHeight} - 16px);
+    background-color: #fff;
+    padding: 0;
+    margin: $padding;
+    overflow-x: hidden;
+    overflow-y: hidden;
   }
 }
 </style>

@@ -33,10 +33,10 @@ export function getStyle(style, filter = []) {
     ]
 
     const result = {}
+
     Object.keys(style).forEach(key => {
         if (!filter.includes(key)) {
             result[key] = style[key]
-
             if (needUnit.includes(key)) {
                 result[key] += 'px'
             }
