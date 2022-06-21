@@ -36,14 +36,14 @@ const list = [
         },
     },
     {
-        component: 'u-grid-row',
+        component: 'u-grid',
         label: '栅格',
         propValue: '栅格',
         icon: 'button',
         style: {},
     },
     {
-        component: 'u-grid-row',
+        component: 'u-grid',
         label: '栅格',
         propValue: '栅格',
         icon: 'button',

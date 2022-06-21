@@ -23,7 +23,7 @@ const props = defineProps({
 
 <style lang="scss" scoped>
 .el-row {
-  padding: 2px;
+  padding: 4px;
   border: 1px dashed #336699;
 
   .el-col {

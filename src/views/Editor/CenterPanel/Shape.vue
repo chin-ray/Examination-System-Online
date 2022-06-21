@@ -1,7 +1,7 @@
 <template>
   <div class="shape" :class="[isActive && 'active']" @mousedown="handleMouseDownOnShape">
     <slot></slot>
-    <div v-show="isActive" class="component-handler px">{{ props.element }}</div>
+    <div v-show="isActive" class="component-handler px">{{ props.element.label }}</div>
   </div>
 </template>
 
