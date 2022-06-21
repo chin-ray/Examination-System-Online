@@ -1,7 +1,7 @@
 <template>
   <div class="shape" :class="[isActive && 'active']" @mousedown="handleMouseDownOnShape">
     <slot></slot>
-    <div v-show="isActive" class="component-handler px">组件名称</div>
+    <div v-show="isActive" class="component-handler px">{{ props.element }}</div>
   </div>
 </template>
 
@@ -92,6 +92,7 @@ const handleMouseDownOnShape = (e) => {
   // position: absolute;
   position: relative;
   width: 100%;
+  margin-bottom: 1px;
 
   &:hover {
     cursor: pointer; //move
@@ -109,10 +110,11 @@ const handleMouseDownOnShape = (e) => {
   color: #fff;
   background-color: #409eff;
   outline: 1px solid #409eff;
+  z-index: 1;
   cursor: default;
 
   position: absolute;
   bottom: -21px;
-  right: 0;
+  left: 0;
 }
 </style>

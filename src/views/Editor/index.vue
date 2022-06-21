@@ -35,7 +35,6 @@
 
 <script setup>
 import { onBeforeMount, onMounted, computed } from 'vue'
-import { Document } from '@element-plus/icons-vue'
 import { listenGlobalKeyDown } from '@/utils/shortcutKey' //监听按键
 import LeftPanel from './LeftPanel/index' // 左侧组件列表
 import CenterPanel from './CenterPanel/index' // 中间画布
