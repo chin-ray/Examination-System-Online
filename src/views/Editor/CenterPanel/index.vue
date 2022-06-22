@@ -25,7 +25,7 @@
       />
     </Shape>
     <!-- 右键菜单 -->
-    <ContextMenu />
+    <ContextMenu v-if="store.editor" />
     <el-empty v-if="!componentData.length" :image-size="120" description="拖动到这" />
   </div>
 </template>
@@ -78,7 +78,7 @@ const getComponentStyle = (style) => {
 }
 
 onMounted(() => {
-  store.getEditor() // 获取编辑器元素
+  store.setEditor() // 获取编辑器元素写入store
 })
 </script>
 

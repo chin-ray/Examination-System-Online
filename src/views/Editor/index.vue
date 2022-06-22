@@ -91,9 +91,6 @@ const onScroll = () => {
 onBeforeMount(() => {
   listenGlobalKeyDown() // 全局监听按键事件
 })
-onMounted(() => {
-  store.getEditor() // 获取编辑器元素
-})
 </script>
 
 <style lang="scss">

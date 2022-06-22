@@ -43,7 +43,7 @@ export default {
         setShapeStyle({ top, left, width, height }) {
             const absorbSize = 2 // 吸附大小
             // 限制组件可移动边界
-            const clientRectInfo = this.editor.getBoundingClientRect() // 画布信息
+            const clientRectInfo = this.getEditor() // 画布信息
             const editorWidth = clientRectInfo.width
             const editorHeight = clientRectInfo.height
             const componentWidth = this.curComponent.style.width
@@ -76,7 +76,7 @@ export default {
             let { left, top } = component.style
             if (left < 0) left = 0
             if (top < 0) top = 0
-            const clientRectInfo = this.editor.getBoundingClientRect() // 画布信息
+            const clientRectInfo = this.getEditor() // 画布信息
             const editorWidth = clientRectInfo.width
             const editorHeight = clientRectInfo.height
             const componentWidth = component.style.width
@@ -113,8 +113,12 @@ export default {
             }
         },
 
-        getEditor() {
+        setEditor() {
             this.editor = $('#editor')
+        },
+
+        getEditor() {
+            return $('#editor').getBoundingClientRect()
         },
 
         setIsDragInEdiotr(status) {

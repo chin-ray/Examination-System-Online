@@ -1,6 +1,7 @@
 <template>
   <div
     v-show="menuShow"
+    ref="contextmenu"
     class="contextmenu"
     :style="{ top: `${menuTop}px`, left: `${menuLeft}px` }"
     @mousedown="EventAction"
@@ -48,7 +49,7 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import {
   DocumentCopy,
   Scissor,
@@ -63,9 +64,28 @@ import { mainStore } from '@/store'
 
 const store = mainStore()
 
+const contextmenu = ref(null)
+
 const copyData = computed(() => store.copyData)
-const menuTop = computed(() => store.menuTop)
-const menuLeft = computed(() => store.menuLeft)
+const menuTop = computed(() => {
+  let top = store.menuTop
+  const editorHeight = store.getEditor().height
+  let menuPadding = 10
+  let menuCount = 2
+  let menuItemHeight = 30
+  if (store.curComponent && !store.isLock) menuCount += 4
+  if (store.curComponent && store.isLock) menuCount += 1
+  if (!store.curComponent && store.copyData) menuCount += 1
+  let menuHeight = menuPadding + menuItemHeight * menuCount
+  if (menuHeight + top > editorHeight) top -= menuHeight
+  return top
+})
+const menuLeft = computed(() => {
+  let left = store.menuLeft
+  const editorWidth = store.getEditor().width
+  if (left + 74 > editorWidth) left -= 74
+  return left
+})
 const menuShow = computed(() => store.menuShow)
 const curComponent = computed(() => store.curComponent)
 
@@ -123,6 +143,7 @@ const deleteComponent = () => {
     border-radius: 4px;
     background-color: #fff;
     font-size: 12px;
+    line-height: 16px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     margin: 0;
