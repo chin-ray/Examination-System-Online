@@ -119,26 +119,22 @@ const deleteComponent = () => {
   z-index: 1000;
 
   ul {
-    border: 1px solid #e4e7ed;
+    // border: 1px solid #e4e7ed;
     border-radius: 4px;
     background-color: #fff;
+    font-size: 12px;
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding: 5px 0;
 
     li {
-      font-size: 14px;
-      padding: 0 10px;
-      margin: 4px;
-      border-radius: 4px;
+      padding: 7px 16px;
       position: relative;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      color: #606266;
-      height: 30px;
-      line-height: 30px;
+      color: #333;
       box-sizing: border-box;
       cursor: pointer;
 

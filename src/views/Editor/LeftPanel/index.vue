@@ -25,6 +25,7 @@ const state = reactive({
 const handleDragStart = (e) => {
   e.dataTransfer.setData('index', e.target.dataset.index)
   store.setIsDragInEdiotr(true)
+  store.hideContextMenu()
 }
 </script>
 
