@@ -71,8 +71,8 @@ const menuTop = computed(() => {
   let top = store.menuTop
   const editorHeight = store.getEditor().height
   let menuPadding = 10
-  let menuCount = 2
   let menuItemHeight = 30
+  let menuCount = 2
   if (store.curComponent && !store.isLock) menuCount += 4
   if (store.curComponent && store.isLock) menuCount += 1
   if (!store.curComponent && store.copyData) menuCount += 1

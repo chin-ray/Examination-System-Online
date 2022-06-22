@@ -38,51 +38,46 @@ const list = [
     {
         component: 'u-grid',
         label: '栅格',
-        propValue: '栅格',
-        icon: 'button',
-        style: {},
-    },
-    {
-        component: 'u-grid',
-        label: '栅格',
-        propValue: '栅格',
+        propValue: '',
         icon: 'button',
         cols: [
             {
-                "id": "grid-col-46174",
-                "type": "grid-col",
-                "widgetList": [],
-                "options": {
-                    "name": "gridCol46174",
-                    "hidden": false,
-                    "span": 12,
-                    "md": 12,
-                    "sm": 12,
-                    "xs": 12,
-                    "customClass": ""
+                id: "grid-col-46174",
+                type: "grid-col",
+                label: '栅格列',
+                componentList: [],
+                options: {
+                    name: "gridCol46174",
+                    hidden: false,
+                    span: 12,
+                    md: 12,
+                    sm: 12,
+                    xs: 12,
+                    customClass: ""
                 },
             },
             {
-                "id": "grid-col-15323",
-                "type": "grid-col",
-                "widgetList": [],
-                "options": {
-                    "name": "gridCol15323",
-                    "hidden": false,
-                    "span": 12,
-                    "md": 12,
-                    "sm": 12,
-                    "xs": 12,
-                    "customClass": ""
+                id: "grid-col-15323",
+                type: "grid-col",
+                label: '栅格列',
+                componentList: [],
+                options: {
+                    name: "gridCol15323",
+                    hidden: false,
+                    span: 12,
+                    md: 12,
+                    sm: 12,
+                    xs: 12,
+                    customClass: ""
                 },
             }
         ],
         options: {
-            "name": "grid120515",
-            "hidden": false,
-            "gutter": 12,
-            "colHeight": null,
-            "customClass": []
+            name: "grid120515",
+            hidden: false,
+            gutter: 0,
+            colHeight: null,
+            customClass: []
         },
     }
 ]

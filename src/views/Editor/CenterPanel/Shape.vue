@@ -92,6 +92,7 @@ const handleMouseDownOnShape = (e) => {
   // position: absolute;
   position: relative;
   width: 100%;
+  height: 100%;
   margin-bottom: 1px;
 
   &:hover {

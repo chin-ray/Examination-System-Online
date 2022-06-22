@@ -14,8 +14,8 @@ app.use(router);
 app.use(pinia);
 
 // 注册自定义组件
-import UButton from '@/components/draggable/u-button'
-import UGrid from '@/components/draggable/u-grid'
+import UButton from '@/components/component-designer/u-button'
+import UGrid from '@/components/component-designer/u-grid'
 app.component('UButton', UButton)
 app.component('UGrid', UGrid)
 
