@@ -1,11 +1,5 @@
 <template>
-  <div
-    id="editor"
-    class="editor"
-    :class="{ 'in-editor': isDragInEdiotr }"
-    @contextmenu="handleContextMenu"
-    @mousedown="handleMouseDown"
-  >
+  <div id="editor" class="editor" @contextmenu="handleContextMenu" @mousedown="handleMouseDown">
     <Shape
       v-for="(item, index) in componentData"
       :key="item.id"
@@ -38,7 +32,6 @@ import { getStyle } from '@/utils/style'
 import { mainStore } from '@/store'
 const store = mainStore()
 
-const isDragInEdiotr = computed(() => store.isDragInEdiotr)
 const componentData = computed(() => store.componentData)
 const curComponent = computed(() => store.curComponent)
 
@@ -102,9 +95,5 @@ $headerHeight: 42px;
     width: 100%;
     height: 100%;
   }
-}
-
-.in-editor {
-  outline: 2px solid #409eff;
 }
 </style>

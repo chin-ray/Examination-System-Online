@@ -16,6 +16,7 @@
       <el-scrollbar class="container-scroll-bar" height="calc(100vh - 42px)" style="width: 100%" @scroll="onScroll">
         <el-main
           class="editor-main"
+          :class="{ 'in-editor': isDragInEdiotr }"
           @drop="handleDrop"
           @dragover="handleDragOver"
           @mousedown="handleMouseDown"
@@ -45,6 +46,7 @@ import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
 
+const isDragInEdiotr = computed(() => store.isDragInEdiotr)
 const curComponent = computed(() => store.curComponent)
 
 // 拖拽结束
@@ -144,5 +146,9 @@ $rightWidth: 300px;
     overflow-x: hidden;
     overflow-y: hidden;
   }
+}
+
+.in-editor {
+  outline: 2px solid #409eff;
 }
 </style>
