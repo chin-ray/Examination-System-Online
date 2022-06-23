@@ -13,6 +13,9 @@ const pinia = createPinia();
 app.use(router);
 app.use(pinia);
 
+import Draggable from 'vuedraggable'
+app.component('Draggable', Draggable)
+
 // 注册自定义组件
 import UButton from '@/components/component-designer/u-button'
 import UGrid from '@/components/component-designer/u-grid'

@@ -8,6 +8,8 @@
       :element="item"
       :index="index"
       :class="{ lock: item.isLock }"
+      :draggable="true"
+      @dragstart="handleDragStart"
     >
       <component
         :is="item.component"
@@ -41,6 +43,14 @@ const handleMouseDown = (e) => {
   if (!store.curComponent) {
     e.preventDefault()
   }
+  store.hideContextMenu()
+}
+
+// 编辑器内拖拽
+const handleDragStart = (e) => {
+  console.log('drag')
+  e.dataTransfer.setData('index', e.target.dataset.index)
+  store.setIsDragInEdiotr(true)
   store.hideContextMenu()
 }
 

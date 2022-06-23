@@ -11,6 +11,21 @@
   height: calc(100vh - #{$navBarHeight} - #{$tagViewHeight} - #{$appMainPadding * 2});
   width: 100%;
 }
+
+.editor-container {
+  .ghost {
+    content: '';
+    font-size: 0;
+    height: 3px;
+    box-sizing: border-box;
+    background: $--color-primary;
+    border: 2px solid $--color-primary;
+    outline-width: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
 .scroll-y {
   @include main-show-wh();
   overflow-y: auto;
@@ -22,22 +37,4 @@
 .scroll-xy {
   @include main-show-wh();
   overflow: auto;
-}
-
-.nav-svg-icon {
-  width: 1em;
-  height: 1em;
-  cursor: pointer;
-  vertical-align: -2px;
-}
-.nav-svg-icon:hover {
-  transform: scale(1.2);
-  transition: all 0.1s;
-}
-
-.marker {
-  font-size: 16px;
-  color: #fc5531;
-  vertical-align: -2px;
-  user-select: none;
 }

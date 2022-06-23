@@ -14,8 +14,10 @@
     "element-plus": "^2.2.4",
     "mathjs": "^10.5.3",
     "pinia": "^2.0.14",
+    "sortablejs": "^1.15.0",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.13"
+    "vue-router": "^4.0.13",
+    "vuedraggable": "4.1.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",

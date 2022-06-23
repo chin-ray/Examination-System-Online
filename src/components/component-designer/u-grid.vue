@@ -1,10 +1,10 @@
 <template>
   <el-row>
-    <el-col v-for="(item, index) in props.element.cols" :key="item.id" :span="item.options.span">
-      <Shape :active="item.id === (curComponent || {}).id" :element="item" :index="index">
+    <template v-for="(item, index) in props.element.cols" :key="`grid-col-${index}`">
+      <el-col :span="item.options.span">
         <slot />
-      </Shape>
-    </el-col>
+      </el-col>
+    </template>
   </el-row>
 </template>
 
@@ -27,7 +27,6 @@ const props = defineProps({
     default: () => {}
   }
 })
-console.log(props.element)
 </script>
 
 <style lang="scss" scoped>
