@@ -1,6 +1,5 @@
 <template>
   <el-col :span="props.element.options.span">
-    1
     <slot />
   </el-col>
 </template>
