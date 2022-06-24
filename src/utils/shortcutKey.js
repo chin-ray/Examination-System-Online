@@ -83,7 +83,7 @@ export function listenGlobalKeyDown() {
     }
 
     window.ondragend = () => {
-        store.setIsDragInEdiotr(false)
+        store.setIsDragInEditor(false)
     }
 }
 

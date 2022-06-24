@@ -12,11 +12,12 @@ export default {
         componentData: [], // 画布组件数据
         curComponent: null,
         curComponentIndex: null,
+        dragToComponent: null, // 拖拽至组件
         // 点击画布时是否点中组件，主要用于取消选中组件用。
         // 如果没点中组件，并且在画布空白处弹起鼠标，则取消当前组件的选中状态
         isClickComponent: false,
         editor: null, // 编辑器元素
-        isDragInEdiotr: false // 是否在编辑器中拖动，用于显示提示边框
+        isDragInEditor: false // 是否在编辑器中拖动，用于显示提示边框
     },
     actions: {
         setClickComponentStatus(status) {
@@ -29,6 +30,14 @@ export default {
 
         setInEditorStatus(status) {
             this.isInEdiotr = status
+        },
+
+        setIsDragInEditor(status) {
+            this.isDragInEditor = status
+        },
+
+        setDragToComponent(component) {
+            this.dragToComponent = component
         },
 
         setCanvasStyle(style) {
@@ -73,22 +82,22 @@ export default {
         },
 
         addComponent({ component, index }) {
-            let { left, top } = component.style
-            if (left < 0) left = 0
-            if (top < 0) top = 0
-            const clientRectInfo = this.getEditor() // 画布信息
-            const editorWidth = clientRectInfo.width
-            const editorHeight = clientRectInfo.height
-            const componentWidth = component.style.width
-            const componentHeight = component.style.height
-            if (editorWidth <= componentWidth + left) {
-                left = editorWidth - componentWidth
-            }
-            if (editorHeight <= componentHeight + top) {
-                top = editorHeight - componentHeight
-            }
-            component.style.left = left
-            component.style.top = top
+            // let { left, top } = component.style
+            // if (left < 0) left = 0
+            // if (top < 0) top = 0
+            // const clientRectInfo = this.getEditor() // 画布信息
+            // const editorWidth = clientRectInfo.width
+            // const editorHeight = clientRectInfo.height
+            // const componentWidth = component.style.width
+            // const componentHeight = component.style.height
+            // if (editorWidth <= componentWidth + left) {
+            //     left = editorWidth - componentWidth
+            // }
+            // if (editorHeight <= componentHeight + top) {
+            //     top = editorHeight - componentHeight
+            // }
+            // component.style.left = left
+            // component.style.top = top
 
             if (index !== undefined) {
                 this.componentData.splice(index, 0, component)
@@ -120,9 +129,5 @@ export default {
         getEditor() {
             return $('#editor').getBoundingClientRect()
         },
-
-        setIsDragInEdiotr(status) {
-            this.isDragInEdiotr = status
-        }
     },
 }

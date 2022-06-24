@@ -16,7 +16,7 @@
       <el-scrollbar class="container-scroll-bar" height="calc(100vh - 42px)" style="width: 100%" @scroll="onScroll">
         <el-main
           class="editor-main"
-          :class="{ 'in-editor': isDragInEdiotr }"
+          :class="{ 'in-editor': isDragInEditor }"
           @drop="handleDrop"
           @dragover="handleDragOver"
           @mousedown="handleMouseDown"
@@ -46,7 +46,7 @@ import { mainStore } from '@/store'
 import { generateID, deepCopy } from '@/utils/utils'
 const store = mainStore()
 
-const isDragInEdiotr = computed(() => store.isDragInEdiotr)
+const isDragInEditor = computed(() => store.isDragInEditor)
 const curComponent = computed(() => store.curComponent)
 
 // 拖拽结束
@@ -54,10 +54,10 @@ const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
   const index = e.dataTransfer.getData('index')
-  if (index) {
+  if (index && index != 'undefined') {
     const component = deepCopy(componentList[index])
-    component.style.top = e.layerY - component.style.height / 2
-    component.style.left = e.layerX - component.style.width / 2
+    // component.style.top = e.layerY - component.style.height / 2
+    // component.style.left = e.layerX - component.style.width / 2
     component.id = generateID()
     store.addComponent({ component })
     store.setCurComponent({ component, index: store.componentData.length - 1 })

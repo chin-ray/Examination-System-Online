@@ -8,8 +8,6 @@
       :element="item"
       :index="index"
       :class="{ lock: item.isLock }"
-      :draggable="true"
-      @dragstart="handleDragStart"
     >
       <component
         :is="item.component"
@@ -20,6 +18,7 @@
         :element="item"
       />
     </Shape>
+    <div v-show="isDragInEditor && !dragToComponent" class="drag-line"></div>
     <!-- 右键菜单 -->
     <ContextMenu v-if="store.editor" />
     <el-empty v-if="!componentData.length" :image-size="120" description="拖动到这" />
@@ -36,6 +35,8 @@ const store = mainStore()
 
 const componentData = computed(() => store.componentData)
 const curComponent = computed(() => store.curComponent)
+const isDragInEditor = computed(() => store.isDragInEditor)
+const dragToComponent = computed(() => store.dragToComponent)
 
 // 点击空白画板
 const handleMouseDown = (e) => {
@@ -43,14 +44,6 @@ const handleMouseDown = (e) => {
   if (!store.curComponent) {
     e.preventDefault()
   }
-  store.hideContextMenu()
-}
-
-// 编辑器内拖拽
-const handleDragStart = (e) => {
-  console.log('drag')
-  e.dataTransfer.setData('index', e.target.dataset.index)
-  store.setIsDragInEdiotr(true)
   store.hideContextMenu()
 }
 
@@ -105,5 +98,11 @@ $headerHeight: 42px;
     width: 100%;
     height: 100%;
   }
+}
+.drag-line {
+  width: 100%;
+  height: 4px;
+  margin: 4px 0;
+  background-color: #409eff;
 }
 </style>
