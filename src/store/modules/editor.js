@@ -82,27 +82,35 @@ export default {
         },
 
         addComponent({ component, index }) {
-            // let { left, top } = component.style
-            // if (left < 0) left = 0
-            // if (top < 0) top = 0
-            // const clientRectInfo = this.getEditor() // 画布信息
-            // const editorWidth = clientRectInfo.width
-            // const editorHeight = clientRectInfo.height
-            // const componentWidth = component.style.width
-            // const componentHeight = component.style.height
-            // if (editorWidth <= componentWidth + left) {
-            //     left = editorWidth - componentWidth
-            // }
-            // if (editorHeight <= componentHeight + top) {
-            //     top = editorHeight - componentHeight
-            // }
-            // component.style.left = left
-            // component.style.top = top
-
             if (index !== undefined) {
                 this.componentData.splice(index, 0, component)
             } else {
                 this.componentData.push(component)
+            }
+        },
+
+        updateComponent({ component }) {
+            if (!this.dragToComponent && !this.curComponent) {
+                this.componentData.push(component)
+            } else if (this.dragToComponent && !this.curComponent) {
+                let findData = this.componentData.find(xx => xx == this.dragToComponent)
+                let index = this.componentData.indexOf(findData)
+                this.componentData.splice(index, 0, component)
+            } else if (!this.dragToComponent && this.curComponent) {
+                let index = this.componentData.indexOf(this.curComponent)
+                this.componentData.splice(index, 1)
+                this.componentData.push(this.curComponent)
+            } else if (this.dragToComponent && this.curComponent) {
+                let findData = this.componentData.find(xx => xx == this.dragToComponent)
+                let curIndex = this.componentData.indexOf(this.curComponent)
+                let toIndex = this.componentData.indexOf(findData)
+                if (curIndex > toIndex) {
+                    this.componentData.splice(curIndex, 1)
+                    this.componentData.splice(toIndex, 0, this.curComponent)
+                } else {
+                    this.componentData.splice(toIndex, 0, this.curComponent)
+                    this.componentData.splice(curIndex, 1)
+                }
             }
         },
 

@@ -59,10 +59,14 @@ const handleDrop = (e) => {
     // component.style.top = e.layerY - component.style.height / 2
     // component.style.left = e.layerX - component.style.width / 2
     component.id = generateID()
-    store.addComponent({ component })
+    // store.addComponent({ component })
+    store.updateComponent({ component })
     store.setCurComponent({ component, index: store.componentData.length - 1 })
     store.recordSnapshot()
+  } else {
+    store.updateComponent({ component: null })
   }
+  store.setDragToComponent(null)
 }
 // 拖拽过程
 const handleDragOver = (e) => {
