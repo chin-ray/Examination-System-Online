@@ -1,12 +1,12 @@
 <template>
-  <div v-show="isDragInEditor && dragToComponent == props.element" class="drag-line"></div>
+  <div class="draggable-slot" @dragenter="handleDragEnter">
+    <div v-show="isDragInEditor && dragToComponent == props.element" class="drag-line"></div>
+  </div>
   <div
     class="shape"
     :class="[isActive && 'active']"
     :draggable="true"
     @dragstart="handleDragStart"
-    @dragenter="handleDragEnter"
-    @dragleave="handleDragLeave"
     @mousedown="handleMouseDownOnShape"
   >
     <slot></slot>
@@ -59,16 +59,13 @@ const handleMouseDownOnShape = (e) => {
 
 // 拖拽开始
 const handleDragStart = () => {
+  store.setDragToComponent(props.element)
   store.setIsDragInEditor(true)
   store.hideContextMenu()
 }
 // 拖拽进入可放置区域
 const handleDragEnter = () => {
   store.setDragToComponent(props.element)
-}
-// 拖拽离开可放置区域
-const handleDragLeave = () => {
-  store.setDragToComponent(null)
 }
 </script>
 
@@ -103,10 +100,14 @@ const handleDragLeave = () => {
   bottom: -21px;
   left: 0;
 }
-.drag-line {
+.draggable-slot {
   width: 100%;
-  height: 4px;
-  margin: 4px 0;
-  background-color: #409eff;
+  height: 12px;
+  padding: 4px 0;
+  .drag-line {
+    width: 100%;
+    height: 4px;
+    background-color: #409eff;
+  }
 }
 </style>

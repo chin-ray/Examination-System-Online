@@ -18,10 +18,12 @@
         :element="item"
       />
     </Shape>
-    <div v-show="isDragInEditor && !dragToComponent" class="drag-line"></div>
+    <div class="draggable-slot" @dragenter="handleDragEnter">
+      <div v-show="isDragInEditor && !dragToComponent" class="drag-line"></div>
+    </div>
+    <el-empty v-if="!componentData.length" :image-size="120" description="拖动到这" />
     <!-- 右键菜单 -->
     <ContextMenu v-if="store.editor" />
-    <el-empty v-if="!componentData.length" :image-size="120" description="拖动到这" />
   </div>
 </template>
 
@@ -68,6 +70,11 @@ const getShapeStyle = (style) => {
   return result
 }
 
+// 拖拽进入可放置区域
+const handleDragEnter = () => {
+  store.setDragToComponent(null)
+}
+
 // 组件样式
 const getComponentStyle = (style) => {
   return getStyle(style, ['top', 'left', 'width', 'height'])
@@ -99,10 +106,15 @@ $headerHeight: 42px;
     height: 100%;
   }
 }
-.drag-line {
+.draggable-slot {
   width: 100%;
-  height: 4px;
-  margin: 4px 0;
-  background-color: #409eff;
+  min-height: 12px;
+  height: 100%;
+  padding: 4px 0;
+  .drag-line {
+    width: 100%;
+    height: 4px;
+    background-color: #409eff;
+  }
 }
 </style>

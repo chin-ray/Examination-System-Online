@@ -25,6 +25,7 @@ const state = reactive({
 
 const handleDragStart = (e) => {
   e.dataTransfer.setData('index', e.target.dataset.index)
+  store.setCurComponent({ component: null, index: null })
   store.setIsDragInEditor(true)
   store.hideContextMenu()
 }
