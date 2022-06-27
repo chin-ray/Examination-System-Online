@@ -114,6 +114,11 @@ export default {
             }
         },
 
+        // hideDragComponent() {
+        //     let curIndex = this.componentData.indexOf(this.curComponent)
+        //     this.componentData.splice(curIndex, 1)
+        // },
+
         deleteComponent(index) {
             this.hideContextMenu()
             if (index === undefined) {
