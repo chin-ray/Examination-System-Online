@@ -61,7 +61,7 @@ const handleMouseDownOnShape = (e) => {
 const handleDragStart = () => {
   store.setDragToComponent(props.element)
   store.setIsDragInEditor(true)
-  // store.hideDragComponent()
+  store.hideDragComponent()
   store.hideContextMenu()
 }
 // 拖拽进入可放置区域
