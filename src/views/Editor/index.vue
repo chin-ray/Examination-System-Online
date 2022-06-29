@@ -25,6 +25,7 @@
           <CenterPanel />
         </el-main>
       </el-scrollbar>
+
       <!-- 右侧组件列表 -->
       <el-aside class="aside-item right">
         <RightPanel v-if="curComponent" class="pl-2" />
