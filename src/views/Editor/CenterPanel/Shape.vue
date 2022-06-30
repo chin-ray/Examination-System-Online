@@ -48,6 +48,7 @@ const dragToComponent = computed(() => store.dragToComponent)
 // 点击外层包裹组件
 const handleMouseDownOnShape = (e) => {
   store.setInEditorStatus(true)
+
   store.setClickComponentStatus(true)
 
   // e.preventDefault()
