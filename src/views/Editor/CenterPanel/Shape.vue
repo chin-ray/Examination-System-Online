@@ -42,6 +42,7 @@ const props = defineProps({
 })
 
 const isActive = computed(() => props.active && !props.element.isLock)
+
 const isDragInEditor = computed(() => store.isDragInEditor)
 const dragToComponent = computed(() => store.dragToComponent)
 
