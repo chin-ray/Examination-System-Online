@@ -53,7 +53,6 @@ const curComponent = computed(() => store.curComponent)
 const handleDrop = (e) => {
   e.preventDefault()
   e.stopPropagation()
-
   const index = e.dataTransfer.getData('index')
   if (index && index != 'undefined') {
     const component = deepCopy(componentList[index])
