@@ -52,7 +52,6 @@ const curComponent = computed(() => store.curComponent)
 // 拖拽结束
 const handleDrop = (e) => {
   e.preventDefault()
-
   e.stopPropagation()
   const index = e.dataTransfer.getData('index')
   if (index && index != 'undefined') {
